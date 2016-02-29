@@ -1,0 +1,693 @@
+/*
+Theme Name: Lebenslauf Portal
+Theme URI: http://underscores.me/
+Author: Göteborg Universitet
+Author URI: http://underscores.me/
+Description: Description
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: llportal
+Tags:
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+
+Lebenslauf Portal is based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
+*/
+
+@import "css/mixins.less";
+@import "css/normalize.css";
+@import "css/skeleton.css";
+@import "css/tabs.css";
+@import "css/leaflet.css";
+@import "css/MarkerCluster.Default.css";
+@import "css/nouislider.css";
+
+@color-blue: #A5865A;
+
+html {
+	background-color: #302a21;
+
+	font-size: 100%;
+}
+
+body {
+	font-size: 1rem;
+}
+
+// Website
+
+.site-header {
+	position: relative;
+
+	height: 320px;
+
+	color: #fff;
+
+	background: url('img/header.jpg');
+	background-position: center;
+	background-size: cover;
+
+	.home & {
+		height: 410px;
+	}
+
+	.site-branding {
+		padding-top: 75px;
+
+		text-shadow: 0px 0px 11px rgba(0, 0, 0, 0.61);
+
+		.home & {
+			padding-top: 125px;
+		}
+	}
+
+	h1 {
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+
+		font-size: 2.5rem;
+
+		border-bottom: #8e7f7a 1px solid;
+
+		a {
+			.transition(all 100ms ease-in-out);
+
+			&:hover {
+				color: #f97500;
+			}
+		}
+	}
+
+	.site-description {
+		font-family: 'Lora', serif;
+		font-size: 1.2rem;
+	}
+
+	.map-button {
+		position: absolute;
+
+		right: 50px;
+		top: 115px;
+
+		padding: 14px 30px;
+
+		background: url(img/map-button.png);
+
+		border-radius: 3px;
+		border: 1px solid #76635e;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+
+		text-decoration: none;
+		font-weight: bold;
+		color: #fff;
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.82);
+
+		.transition(all 400ms ease-in-out);
+
+		.home & {
+			top: 165px;
+		}
+
+		.page-template-map-page & {
+			display: none;
+		}
+
+		.label {
+			position: relative;
+		}
+
+		.overlay {
+			position: absolute;
+
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			max-height: 0;
+
+			background: rgba(0, 0, 0, 0.14);
+
+			.transition(all 800ms ease-in-out);
+		}
+
+		&:hover {
+			box-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+			
+			.overlay {
+				max-height: 1000px;
+			}
+		}
+	}
+}
+
+.nav-container {
+	position: absolute;
+
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	height: 55px;
+
+	background: rgba(0, 0, 0, 0.5);
+
+	ul.menu {
+		margin-left: -20px;
+		margin-right: -20px;
+
+		list-style: none;
+
+		>li {
+			display: inline-block;
+
+			a {
+				display: block;
+
+				padding: 12px 20px;
+
+				color: #fff;
+				text-decoration: none;
+				font-size: 1.2rem;
+
+				.transition(all 200ms ease-in-out);
+
+				&:hover {
+					color: #f97500;
+				}
+			}
+
+			&.current_page_item {
+				a {
+					color: #f97500;
+				}
+			}
+		}
+	}
+}
+
+.content-area {
+	margin-top: 50px;
+}
+
+.site {
+	background: #fbfbfb;
+
+	box-shadow: 0 2px 5px #000, 0 2px 5px #000;
+}
+
+.site-footer {
+	position: relative;
+	
+	padding: 80px 0;
+
+	color: #fff;
+
+	background: #302a21;
+}
+
+// Map interface
+
+.map-content {
+	position: relative;
+
+	margin-top: 0;
+}
+
+.table-marker {
+	display: inline-block;
+
+	position: relative;
+
+	top: 5px;
+
+	width: 20px;
+	height: 20px;
+
+	border-radius: 3px;
+
+	&.location {
+		background-color: #8BE6A2;
+	}
+
+	td a & {
+		top: 2px;
+
+		width: 10px;
+		height: 10px;
+
+		margin-right: 10px;
+		margin-left: -20px;
+	}
+}
+
+.main-content {
+	margin-top: 120px;
+	margin-bottom: 150px;
+}
+
+.map-wrapper {
+	position: relative;
+
+	height: 100vh;
+
+	min-height: 750px;
+
+	.map-header {
+		position: absolute;
+
+		top: 0;
+		left: 0;
+		right: 0;
+
+		height: 60px;
+
+		padding: 0;
+
+		border-bottom: 1px solid #ccc;
+
+		background-color: #fff;
+
+		box-shadow: 0 0 9px rgba(0, 0, 0, 0.08);
+
+		box-sizing: border-box;
+
+		z-index: 2000;
+
+		.fixed-map-ui & {
+			position: fixed;
+		}
+
+		.header-tabs-container {
+			height: 100%;
+
+			>.row {
+				position: relative;
+
+				height: 100%;
+
+				>.header-tabs {
+					position: absolute;
+
+					bottom: 0;
+
+					a {
+						display: inline-block;
+
+						color: #000;
+
+						padding: 14px 20px;
+						
+						text-decoration: none;
+						font-weight: bold;
+						font-size: 0.95rem;
+
+						&.selected {
+							border-bottom: @color-blue 4px solid;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.map-toolbar {
+		position: absolute;
+
+		top: 60px;
+		left: 0;
+		right: 0;
+
+		padding: 20px 0;
+
+		background: #fbfbfb;
+
+		border-bottom: 1px solid #ccc;
+		box-shadow: 0 0 9px rgba(0,0,0,.08);
+
+		z-index: 1000;
+
+		.fixed-map-ui & {
+			position: fixed;
+		}
+
+		select, input, button, .button {
+			margin-bottom: 0;
+		}
+	}
+
+	.map-progress {
+		position: absolute;
+
+		top: 139px;
+		left: 0;
+		right: 0;
+
+		height: 3px;
+
+		border-bottom: 1px solid #ccc;
+
+		background-color: #f4f4f4;
+
+		z-index: 900;
+
+		.translate(0, -100%);
+
+		visibility: hidden;
+
+		transition: visibility 0s, transform 400ms ease-in-out;
+
+		.fixed-map-ui & {
+			position: fixed;
+		}
+
+		&.visible {
+			visibility: visible;
+
+			.translate(0, 0);
+		}
+
+		.indicator {
+			position: absolute;
+
+			top: 0;
+			bottom: 0;
+
+			background: #57A9FF;
+
+			.animation-duration(1.5s);
+			.animation-name(indicatorAnimate);
+			.animation-iteration-count(infinite);
+		}
+	}
+
+	.map-legends {
+		position: absolute;
+
+		left: 20px;
+		bottom: 160px;
+
+		padding: 10px 20px;
+
+		border: 1px solid #ccc;
+		border-radius: 3px;
+
+		background: #fff;
+
+		z-index: 10;
+
+		opacity: 0;
+
+		visibility: hidden;
+
+		transition: visibility 0s, opacity 400ms ease-in-out;
+
+		&.visible {
+			visibility: visible;
+
+			opacity: 1;
+		}
+
+		.legends-item {
+			float: left;
+
+			position: relative;
+
+			height: 40px;
+
+			padding-right: 15px;
+			margin-right: 15px;
+
+			border-right: 1px solid #ccc;
+
+			line-height: 40px;
+
+			&:last-child {
+				padding-right: 0;
+				margin-right: 0;
+
+				border-right: none;
+			}
+
+			.label {
+				display: inline-block;
+
+				position: relative;
+
+				top: 2px;
+			}
+
+			.circle {
+				display: inline-block;
+
+				margin-right: 5px;
+
+				background: #FF8C4D;
+
+				border: 1px solid #7D7D7D;
+				border-radius: 100%;
+
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.map-container {
+		position: absolute;
+
+		top: 139px;
+		left: 0;
+		right: 0;
+		bottom: 136px;
+
+		height: auto;
+
+		.fixed-map-ui & {
+			position: fixed;
+		}
+	}
+
+	.map-timeline {
+		position: absolute;
+
+		bottom: 60px;
+		left: 0;
+		right: 0;
+
+		height: 76px;
+
+		background-color: #fbfbfb;
+
+		box-shadow: 0 0 9px rgba(0, 0, 0, 0.08);
+
+		box-sizing: border-box;
+		border-top: 1px solid #ccc;
+
+		z-index: 1000;
+
+		.slider-option {
+			position: absolute;
+
+			left: 0;
+			top: 0;
+			bottom: 0;
+
+			width: 70px;
+
+			box-sizing: border-box;
+			border-right: 1px solid #C1C1C1;
+
+			padding: 25px;
+
+			select {
+				width: 22px;
+				height: 22px;
+
+				border: none;
+
+				background-image: url(../img/icon-gear.png);
+				background-position: center;
+				background-repeat: no-repeat;
+
+				text-indent: 9999px;
+
+				overflow: hidden;
+
+				-webkit-appearance: none;
+
+				cursor: pointer;
+
+				&::-ms-expand {
+					display: none;
+				}
+			}
+		}
+
+		.slider-container {
+			position: absolute;
+
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			padding: 28px;
+
+			overflow: hidden;
+
+			.year-labels {
+				position: absolute;
+
+				left: -32px;
+				right: 2px;
+				top: 42px;
+
+				.label {
+					display: inline-block;
+
+					width: 10.842%;
+
+					text-align: center;
+					font-size: 0.7rem;
+
+					color: #999;
+				}
+			}
+		}
+	}
+	
+	.map-footer {
+		position: absolute;
+
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		border-top: 1px solid #ccc;
+
+		background-color: #fff;
+
+		box-shadow: 0 0 9px rgba(0, 0, 0, 0.17);
+
+		z-index: 1000;
+
+		.viewmode-buttons {
+			a {
+				display: block;
+
+				float: left;
+
+				padding: 20px 30px;
+
+				border-right: 1px solid #c1c1c1;
+
+				color: #333;
+				text-decoration: none;
+
+				&.selected {
+					background-color: #e5e5e4;
+				}
+
+				&:hover {
+					background-color: #f1f1f0;
+				}
+			}
+		}
+
+		.search-result-label{
+			float: right;
+
+			margin: 20px 30px;
+
+			.search-info {
+				margin-right: 10px;
+
+				color: #777;
+			}
+		}
+	}
+}
+
+@keyframes indicatorAnimate {
+	0% {
+		left: 0%;
+		right: 100%;
+	}
+
+	25% {
+		left: 0%;
+		right: 50%;
+	}
+
+	75% {
+		left: 50%;
+		right: 0%;
+	}
+
+	100% {
+		left: 100%;
+		right: 0%;
+	}
+}
+
+
+.leaflet-popup-content-wrapper {
+	border-radius: 4px;
+
+	h2 {
+		font-size: 1.8rem;
+	}
+}
+
+form.leaflet-control-layers-list, input.leaflet-control-layers-selector {
+	margin-bottom: 0;
+}
+
+.overlay-container {
+	.message {
+		position: absolute;
+
+		top: 50%;
+		left: 50%;
+
+		padding: 15px;
+
+		background-color: #E1F3BC;
+
+		border: 1px solid #ccc;
+		border-radius: 5px;
+
+		color: #434C2F;
+		font-weight: bold;
+		font-size: 1.7rem;
+
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24);
+
+		transform: translate(-50%, -50%);
+	}
+}
+
+.place-view {
+	position: relative;
+
+	background: #fff;
+
+	border-top: 1px solid #ccc;
+
+	z-index: 1000;
+
+	>.container {
+		padding-top: 50px;
+
+		h2 {
+			&.place-name {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
