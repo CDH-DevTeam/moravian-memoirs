@@ -9,8 +9,8 @@ var MapCollection = require('../collections/MapCollection');
 
 module.exports = Backbone.View.extend({
 	markerIcon: L.icon({
-		iconUrl: '/lebenslauf/img/map-marker.png',
-		shadowUrl: '/lebenslauf/img/map-marker-shadow.png',
+		iconUrl: '/img/map-marker.png',
+		shadowUrl: '/img/map-marker-shadow.png',
 
 		iconSize:     [15, 23], // size of the icon
 		shadowSize:   [14, 10], // size of the shadow

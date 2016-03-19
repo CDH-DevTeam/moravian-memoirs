@@ -3,7 +3,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 module.exports = Backbone.Collection.extend({
-	urlBase: '/lebenslauf/api/v2/persons',
+	urlBase: '/api/v2/persons',
 
 	initialize: function() {
 	},
