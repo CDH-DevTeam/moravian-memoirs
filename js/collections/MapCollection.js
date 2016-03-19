@@ -3,7 +3,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 module.exports = Backbone.Collection.extend({
-	urlBase: '/api/v2/locations',
+	urlBase: 'http://sagnagrunnur.com/lebenslauf/api/v2/locations',
 
 	initialize: function() {
 	},
