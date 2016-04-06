@@ -3,7 +3,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 module.exports = Backbone.Collection.extend({
-	urlBase: 'http://moravianlives.org:8001/api/v2/locations',
+	urlBase: 'http://moravianlives.org:8001/v2/locations',
 
 	initialize: function() {
 	},
