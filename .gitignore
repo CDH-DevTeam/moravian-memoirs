@@ -1,0 +1,4 @@
+build/app.browserified.js
+node_modules/
+wp-config.php
+www/wp-config.php
