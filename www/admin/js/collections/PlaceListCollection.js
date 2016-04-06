@@ -5,7 +5,7 @@ define(function(require){
 	var $ = require('jquery');
 
 	return Backbone.Collection.extend({
-		urlBase: '/lebenslauf/api/places',
+		urlBase: 'http://moravianlives.org:8001/places',
 
 		initialize: function() {
 			this.metadata = new Backbone.Model();

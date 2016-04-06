@@ -5,7 +5,7 @@ define(function(require){
 	var $ = require('jquery');
 
 	return Backbone.Collection.extend({
-		urlBase: '/lebenslauf/api/persons/duplicates',
+		urlBase: 'http://moravianlives.org:8001/persons/duplicates',
 
 		initialize: function() {
 			this.metadata = new Backbone.Model();
