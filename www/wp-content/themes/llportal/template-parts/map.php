@@ -515,4 +515,4 @@
 
 </script>
 
-<script src="/wp-content/themes/llportal/js/app.min.js"></script>
+<script src="js/app.min.js"></script>
