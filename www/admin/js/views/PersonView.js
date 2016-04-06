@@ -15,7 +15,7 @@ define(function(require){
 			this.model = new DataModel();
 			this.model.once('change', this.render, this);
 			this.model.on('sync', this.modelSaved, this);
-			this.model.url = '/lebenslauf/api/person/'+this.options.personId;
+			this.model.url = 'http://moravianlives.org:8001/person/'+this.options.personId;
 			this.model.fetch();
 		},
 
@@ -24,7 +24,7 @@ define(function(require){
 		},
 
 		saveButtonClick: function() {
-			this.model.url = '/lebenslauf/api/admin/person/'+this.options.personId;
+			this.model.url = 'http://moravianlives.org:8001/admin/person/'+this.options.personId;
 			this.model.save(null, {
 				success: _.bind(function() {
 					this.render();

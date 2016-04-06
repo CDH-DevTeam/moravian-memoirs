@@ -86,7 +86,7 @@ define(function(require){
 			var finalPErson = this.$el.find('.combine-controls .combine-persons-select option:selected').attr('value');
 
 			$.ajax({
-				url: '/lebenslauf/api/admin/persons/combine/'+finalPErson,
+				url: 'http://moravianlives.org:8001/admin/persons/combine/'+finalPErson,
 				type: 'POST',
 				data: {
 					ids: this.checkedPersons

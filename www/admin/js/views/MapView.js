@@ -18,7 +18,7 @@ define(function(require){
 
 			this.collection = new DataCollection();
 			this.collection.on('reset', this.render, this);
-			this.collection.url = '/lebenslauf/api/locations';
+			this.collection.url = 'http://moravianlives.org:8001/locations';
 			this.collection.fetch({
 				reset: true
 			});

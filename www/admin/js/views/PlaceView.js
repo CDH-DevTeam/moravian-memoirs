@@ -15,7 +15,7 @@ define(function(require){
 
 			this.model = new DataModel();
 			this.model.once('change', this.render, this);
-			this.model.url = '/lebenslauf/api/place/'+this.options.placeId;
+			this.model.url = 'http://moravianlives.org:8001/place/'+this.options.placeId;
 			this.model.fetch();
 		},
 
@@ -29,7 +29,7 @@ define(function(require){
 		},
 
 		saveButtonClick: function() {
-			this.model.url = '/lebenslauf/api/admin/place/'+this.options.placeId;
+			this.model.url = 'http://moravianlives.org:8001/admin/place/'+this.options.placeId;
 			this.model.save(null, {
 				success: _.bind(function() {
 					this.render();
