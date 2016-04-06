@@ -16,6 +16,7 @@ var sourcemaps  = require('gulp-sourcemaps');
 var gulpif = require('gulp-if');
 var prefix = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
+var buffer = require('vinyl-buffer');
 
 // Tasks
 // -------------------------
@@ -27,39 +28,34 @@ var uglify = function() {
 
 // Build tasks
 gulp.task('browserify', function() {
-  var b = browserify('./js/main.js', {debug: true})
-  return b.transform(hbsfy)
-	.bundle()
-	.pipe(source('app.browserified.js'))
-	.pipe(gulp.dest('./build'))
+
+  return browserify('./scripts/main.js', {debug: true})
+    .bundle()
+    .pipe(source('app.min.js'))
+    .pipe(buffer())
+ //   .pipe(uglify())
+    .pipe(gulp.dest('./www/js'));
 });
 
 gulp.task('minify', ['styles'], function() {
   return gulp.src('./build/bundle.css')
 	.pipe(minifyCSS())
 	.pipe(rename('app.min.css'))
-	.pipe(gulp.dest('./public/css'))
-});
-
-gulp.task('uglify', function() {
-  return gulp.src('./build/app.browserified.js')
-	.pipe(uglify())
-	.pipe(rename('app.min.js'))
-	.pipe(gulp.dest('./wp-content/themes/llportal/js'));
+	.pipe(gulp.dest('./www/css'))
 });
 
 // Style tasks
 gulp.task('styles', function() {
-  return gulp.src('./scr/less/style.less')
+  return gulp.src('./www/css/style.less')
 	.pipe(less())
 	.pipe(prefix({ cascade: true }))
 	.pipe(rename('style.css'))
-	.pipe(gulp.dest('./scr/css'))
+	.pipe(gulp.dest('./www/css'))
 });
 
 // Clean tasks
 gulp.task('clean', ['cleanbuild'], function(done) {
-  del(['./scr/js', './scr/css'], done)
+  del(['./scr/js', './www/css'], done)
 });
 
 gulp.task('cleanbuild', function(done) {
@@ -68,11 +64,29 @@ gulp.task('cleanbuild', function(done) {
 
 // commands
 gulp.task('build', ['clean'], function(done) {
-  return runSequence('browserify', 'uglify', 'minify', 'cleanbuild', done);
+  return runSequence('browserify', 'minify', 'cleanbuild', done);
 });
+
+gulp.task('watch', function(done){
+  return runSequence('build', function() {
+	gulp.watch('./scripts/**/*.js', ['build']);
+	gulp.watch('./scr/templates/*.hbs', ['build']);
+	gulp.watch('./www/css/*.less', ['build']);
+	done()
+  })
+});
+
+gulp.task('dev', ['watch'], function() {
+  nodemon({
+	script: 'server.js',
+	delay: 2500
+  })
+});
+
 
 gulp.task('watch', function() {
-	gulp.watch('./js/**/*.js', ['browserify', 'uglify']);
+	gulp.watch('./scripts/**/*.js', ['browserify']);
 });
 
-gulp.task('default', ['watch', 'browserify', 'uglify', 'styles']);
+gulp.task('default', ['watch', 'browserify']);
+
