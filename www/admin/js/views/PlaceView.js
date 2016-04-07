@@ -30,6 +30,7 @@ define(function(require){
 
 		saveButtonClick: function() {
 			this.model.url = 'http://moravianlives.org:8001/admin/place/'+this.options.placeId;
+			Backbone.emulateHTTP = true;
 			this.model.save(null, {
 				success: _.bind(function() {
 					this.render();
