@@ -43,7 +43,7 @@ define(function(require){
 			var finalPlace = this.$el.find('.combine-controls .combine-persons-select option:selected').attr('value');
 
 			$.ajax({
-				url: 'http://moravianlives.org:8001admin/persons/combine/'+finalPlace,
+				url: 'http://moravianlives.org:8001/admin/persons/combine/'+finalPlace,
 				type: 'POST',
 				data: {
 					ids: this.checkedPlaces
