@@ -44,7 +44,7 @@ define(function(require){
 			var finalPlace = this.$el.find('.combine-controls .combine-places-select option:selected').attr('value');
 
 			$.ajax({
-				url: 'http://moravianlives.org:8001admin/places/combine/'+finalPlace,
+				url: 'http://moravianlives.org:8001/admin/places/combine/'+finalPlace,
 				type: 'POST',
 				data: {
 					ids: this.checkedPlaces
