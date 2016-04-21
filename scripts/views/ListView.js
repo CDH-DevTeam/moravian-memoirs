@@ -24,15 +24,6 @@ module.exports = Backbone.View.extend({
 		$(event.currentTarget).parent().toggleClass('item-open');
 	},
 
-	resultTabClick: function(event) {
-		this.$el.find('.tabs.result-tabs a.tab').removeClass('selected');
-		$(event.currentTarget).addClass('selected');
-
-		this.resultIndex = $(event.currentTarget).data('result-index');
-		this.collection.resultIndex = this.resultIndex;
-		this.renderList();
-	},
-
 	loadMoreClick: function() {
 		this.collection.addPage(this.resultIndex);
 	},
@@ -62,13 +53,6 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		this.resultIndex = 0;
 
-		var resultsTabsHtml = '';
-		_.each(this.collection.models, _.bind(function(model, index) {
-
-			resultsTabsHtml += '<a class="tab'+(index == this.resultIndex ? ' selected' : '')+'" data-result-index="'+index+'"><span class="line-color" style="border-color: '+this.options.colors[index]+'"></span>'+model.get('search_query')+' '+this.collection.filtersToString(model.get('filters'))+'</a>';
-		}, this));
-		this.$el.find('.result-tabs').html(resultsTabsHtml);
-
 		this.renderList();
 	},
 
@@ -89,39 +73,39 @@ module.exports = Backbone.View.extend({
 		}, this));
 
 		this.$el.find('.page-info').html(' '+(
-			Number(this.collection.at(this.resultIndex).get('from_index')+20) > this.collection.at(this.resultIndex).get('total_hit_count') ? 
-			this.collection.at(this.resultIndex).get('total_hit_count') :
-			Number(this.collection.at(this.resultIndex).get('from_index')+20)
-		)+' av '+this.collection.at(this.resultIndex).get('total_hit_count'));
+			Number(this.collection.metadata.page+20) > this.collection.metadata.total ? 
+			this.collection.metadata.total :
+			Number(this.collection.metadata.page+20)
+		)+' of '+this.collection.metadata.total);
 	},
 
 	renderList: function() {
 		this.$el.find('.list-container').html('');
 
-		if (this.collection.at(this.resultIndex).get('hits').length == 0) {
+		if (this.collection.length == 0) {
 			this.$el.addClass('no-results');
 		}
 		else {
 			this.$el.removeClass('no-results');
-			_.each(this.collection.at(this.resultIndex).get('hits'), _.bind(function(model, index) {
+			_.each(this.collection.models, _.bind(function(model, index) {
 				var newEl = $('<div class="list-item"/>');
+
 				this.$el.find('.list-container').append(newEl);
 
 				var itemView = new ListItemView({
 					el: newEl,
-					model: new Backbone.Model(model),
-					router: this.options.router,
-					parties: this.options.parties
+					model: model,
+					router: this.options.routet
 				});		
 			}, this));
 		}
 
 
 		this.$el.find('.page-info').html(' '+(
-			Number(this.collection.at(this.resultIndex).get('from_index')+20) > this.collection.at(this.resultIndex).get('total_hit_count') ? 
-			this.collection.at(this.resultIndex).get('total_hit_count') :
-			Number(this.collection.at(this.resultIndex).get('from_index')+20)
-		)+' av '+this.collection.at(this.resultIndex).get('total_hit_count'));
+			Number(this.collection.metadata.page) > this.collection.metadata.total ? 
+			this.collection.metadata.total :
+			Number(this.collection.metadata.page)
+		)+' of '+this.collection.metadata.total);
 
 		this.$el.removeClass('loading');
 	}

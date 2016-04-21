@@ -121,6 +121,9 @@
 	transform: translateX(-50%);
 	font-weight: bold;
 }
+.noUi-handle .handle-number.number-top {
+	top: -18px;
+}
 .noUi-active {
 	background: #3fb2d6;
 }

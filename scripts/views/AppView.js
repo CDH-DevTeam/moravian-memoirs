@@ -5,6 +5,8 @@ var $ = require('jquery');
 var noUiSlider = require('../lib/nouislider.min');
 
 var MapView = require('./MapView');
+var ListView = require('./ListView');
+var GraphView = require('./GraphView');
 var AppRouter = require('../router/AppRouter');
 
 module.exports = Backbone.View.extend({
@@ -16,15 +18,11 @@ module.exports = Backbone.View.extend({
 
 		this.router = new AppRouter();
 
-		this.router.on('route:places', _.bind(function(place, yearRange, rangeType, relation, gender, name) {
+		this.router.on('route:places', _.bind(function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive) {
 			this.setAppMode('places');
 
-			if (yearRange != null) {				
-				this.getPlaces(yearRange.split(';'), rangeType, relation, gender);
-
-				if (place != null && place != this.currentPlace) {
-					this.getPlace(place);
-				}
+			if (yearRange != null) {
+				this.getPlaces(yearRange.split(';'), rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive);
 			}
 		}, this));
 
@@ -45,24 +43,29 @@ module.exports = Backbone.View.extend({
 
 	events: {
 		'click .viewmode-buttons a': 'viewModeButtonClick',
-		'click .update-map-button': 'updateMapButtonClick'
+		'click .update-map-button': 'updateMapButtonClick',
+		'click .more-form-button': 'moreFormButtonClick',
+		'mouseover .map-toolbar': 'toolbarMouseEnter',
+		'mouseout .map-toolbar': 'toolbarMouseLeave'
 	},
 
 	initSlider: function() {
 		this.slider = noUiSlider.create($('#yearRangeSlider')[0], {
-			start: [1750, 1800],
+			start: [1600, 2015],
 			step: 1,
 			behaviour: 'drag',
 			connect: true,
 			range: {
-				'min': 1500,
+				'min': 1600,
 				'max':  2015
 			}
 		});
 
 		this.slider.on('slide', _.bind(function(event, ui) {
-			$('#yearRangeSlider .noUi-handle-lower').html('<div class="handle-number">'+Math.round(this.slider.get()[0])+'</div>');
+			$('#yearRangeSlider .noUi-handle-lower').html('<div class="handle-number number-top">'+Math.round(this.slider.get()[0])+'</div>');
 			$('#yearRangeSlider .noUi-handle-upper').html('<div class="handle-number">'+Math.round(this.slider.get()[1])+'</div>');
+
+			this.graphView.setTimeOverlay(this.slider.get());
 		}, this));
 	},
 
@@ -74,11 +77,36 @@ module.exports = Backbone.View.extend({
 		this.mapView.setViewmode($(event.currentTarget).data('viewmode'));
 	},
 
-	getPlaces: function(yearRange, rangeType, relationType, gender) {
+	moreFormButtonClick: function() {
+		this.$el.find('.map-toolbar .form-extra').toggleClass('visible');
+	},
+
+	toolbarMouseEnter: function() {
+//		this.$el.find('.map-toolbar .form-extra').addClass('visible');
+		this.mouseOnForm = true;
+	},
+
+	toolbarMouseLeave: function() {
+		this.mouseOnForm = false;
+
+		setTimeout(_.bind(function() {
+			if (!this.mouseOnForm) {
+				this.$el.find('.map-toolbar .form-extra').removeClass('visible');
+			}
+		}, this), 2000);
+	},
+
+	getPlaces: function(yearRange, rangeType, relationType, gender, place, placeRelation, name, firstname, surname, archive) {
 		this.searchCriterias.yearRange = yearRange;
 		this.searchCriterias.rangeType = rangeType;
 		this.searchCriterias.relationType = relationType;
 		this.searchCriterias.gender = gender;
+		this.searchCriterias.place = place;
+		this.searchCriterias.placeRelation = placeRelation;
+		this.searchCriterias.name = name;
+		this.searchCriterias.firstname = firstname;
+		this.searchCriterias.surname = surname;
+		this.searchCriterias.archive = archive;
 
 		this.updateMap();
 	},
@@ -92,13 +120,20 @@ module.exports = Backbone.View.extend({
 	},
 
 	updateMapButtonClick: function() {
+		console.log('navigate');
 		this.router.navigate(
 				this.appMode+
 				(this.appMode == 'places' && this.currentPlace != undefined ? '/place/'+this.currentPlace : '')+
 				('/year_range/'+([Math.round(Number(this.slider.get()[0])), Math.round(Number(this.slider.get()[1]))]).join(';'))+
 				(this.$el.find('#yearRangeOption').val() != 'initial' ? '/range_type/'+this.$el.find('#yearRangeOption').val() : '')+
 				(this.$el.find('#relationOption').val() && this.$el.find('#relationOption').val() != 'initial' ? '/relation/'+this.$el.find('#relationOption').val() : '')+
-				(this.$el.find('#genderOption').val() != 'initial' ? '/gender/'+this.$el.find('#genderOption').val() : ''),
+				(this.$el.find('#genderOption').val() != 'initial' ? '/gender/'+this.$el.find('#genderOption').val() : '')+
+				(this.$el.find('#placeNameInput').val() != '' ? '/place/'+this.$el.find('#placeNameInput').val() : '')+
+				(this.$el.find('#placeNameOptions').val() != 'initial' && this.$el.find('#placeNameInput').val() != '' ? '/placerelation/'+this.$el.find('#placeNameOptions').val() : '')+
+				(this.$el.find('#nameInput').val() != '' ? '/name/'+this.$el.find('#nameInput').val() : '')+
+				(this.$el.find('#firstnameInput').val() != '' ? '/firstname/'+this.$el.find('#firstnameInput').val() : '')+
+				(this.$el.find('#surnameInput').val() != '' ? '/surname/'+this.$el.find('#surnameInput').val() : '')+
+				(this.$el.find('#archiveOption').val() != 'initial' ? '/archive/'+this.$el.find('#archiveOption').val() : ''),
 			{
 				trigger: true
 			}
@@ -114,6 +149,9 @@ module.exports = Backbone.View.extend({
 		*/
 		if (this.searchCriterias.yearRange && this.searchCriterias.yearRange != [Math.round(Number(this.slider.get()[0])), Math.round(Number(this.slider.get()[1]))]) {
 			this.slider.set(this.searchCriterias.yearRange);
+			$('#yearRangeSlider .noUi-handle-lower').html('<div class="handle-number number-top">'+Math.round(this.slider.get()[0])+'</div>');
+			$('#yearRangeSlider .noUi-handle-upper').html('<div class="handle-number">'+Math.round(this.slider.get()[1])+'</div>');
+			this.graphView.timeOverlay = this.searchCriterias.yearRange;
 		}
 		if (this.searchCriterias.rangeType && this.searchCriterias.rangeType != this.$el.find('#yearRangeOption').val()) {
 			this.$el.find('#yearRangeOption').val(this.searchCriterias.rangeType);
@@ -124,6 +162,24 @@ module.exports = Backbone.View.extend({
 		if (this.searchCriterias.gender && this.searchCriterias.gender != this.$el.find('#genderOption').val()) {
 			this.$el.find('#genderOption').val(this.searchCriterias.gender);
 		}
+		if (this.searchCriterias.place && this.searchCriterias.place != this.$el.find('#placeNameInput').val()) {
+			this.$el.find('#placeNameInput').val(this.searchCriterias.place);
+		}
+		if (this.searchCriterias.placeRelation && this.searchCriterias.placeRelation != this.$el.find('#placeNameOptions').val()) {
+			this.$el.find('#placeNameOptions').val(this.searchCriterias.placeRelation);
+		}
+		if (this.searchCriterias.name && this.searchCriterias.name != this.$el.find('#nameInput').val()) {
+			this.$el.find('#nameInput').val(this.searchCriterias.name);
+		}
+		if (this.searchCriterias.firstname && this.searchCriterias.firstname != this.$el.find('#firstnameInput').val()) {
+			this.$el.find('#firstnameInput').val(this.searchCriterias.firstname);
+		}
+		if (this.searchCriterias.surname && this.searchCriterias.surname != this.$el.find('#nameInput').val()) {
+			this.$el.find('#surnameInput').val(this.searchCriterias.surname);
+		}
+		if (this.searchCriterias.archive && this.searchCriterias.archive != this.$el.find('#archiveOption').val()) {
+			this.$el.find('#archiveOption').val(this.searchCriterias.archive);
+		}
 
 		this.$el.find('.update-map-button').attr('disabled', 'disabled');
 
@@ -132,9 +188,39 @@ module.exports = Backbone.View.extend({
 				this.searchCriterias.yearRange,
 				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
 				this.searchCriterias.relationType == 'initial' ? null : this.searchCriterias.relationType,
-				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender
+				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
 			);
 
+			this.listView.collection.getPersons(
+				this.searchCriterias.yearRange,
+				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
+				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+			);
+
+			this.graphView.collection.getYearData(
+				this.searchCriterias.yearRange,
+				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
+				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+			);
+/*
 			if (this.currentPlace != undefined) {
 				this.placeView.collection.getPersons(
 					this.currentPlace,
@@ -144,6 +230,7 @@ module.exports = Backbone.View.extend({
 					this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender
 				);
 			}
+*/
 		}
 
 		if (this.appMode == 'movements') {
@@ -220,7 +307,7 @@ module.exports = Backbone.View.extend({
 			}
 
 			var template = _.template($("#"+templateName).html());
-			this.$el.find('.map-toolbar').html(template());				
+			this.$el.find('.map-toolbar .toolbar-content').html(template());				
 
 			this.$el.find('.header-tabs-container a').removeClass('selected');
 			this.$el.find('.header-tabs-container a.'+this.appMode).addClass('selected');
@@ -272,6 +359,16 @@ module.exports = Backbone.View.extend({
 			this.$el.find('.json-button').attr('href', this.mapView.collection.url);
 		}, this));
 
+		this.listView = new ListView({
+			el: this.$el.find('#hitlistViewContainer')[0],
+			router: this.router
+		});
+
+		this.graphView = new GraphView({
+			el: this.$el.find('#graphViewContainer')[0],
+			router: this.router
+		});
+
 		this.initSlider();
 /*
 		setTimeout(_.bind(function() {
@@ -283,17 +380,20 @@ module.exports = Backbone.View.extend({
 		$(window).scroll(_.bind(function(event) {
 			var scrollTop = $(window).scrollTop();
 
-			if (scrollTop < 320) {
-				this.$el.removeClass('fixed-map-ui');
+			if (scrollTop < 380) {
+//				this.$el.removeClass('fixed-map-ui');
+				this.$el.removeClass('fixed-search-form');
 			}
 			else {
-				this.$el.addClass('fixed-map-ui');
+//				this.$el.addClass('fixed-map-ui');
+				this.$el.addClass('fixed-search-form');
 			}
 		}, this));
 
 		var scrollTop = $(window).scrollTop();
 		if (scrollTop > 320) {
-			this.$el.addClass('fixed-map-ui');
+//			this.$el.addClass('fixed-map-ui');
+			this.$el.addClass('fixed-search-form');
 		}
 
 		return this;

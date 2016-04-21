@@ -1,41 +1,27 @@
 var Backbone = require('backbone');
 var _ = require('underscore');
-var ListItemModel = require('./../models/ListItemModel');
 
 module.exports = Backbone.Collection.extend({
-	model: ListItemModel,
+	urlBase: 'http://localhost/moravian-api/v2/persons',
 
-	url: 'http://cdh-vir-1.it.gu.se:8900/motioner/hits',
-
-	search: function(query, timeRange) {
-		this.pageIndex = 0;
-		this.searchData = {
-			"searchPhrase": query,
-			"startDate": timeRange[0],
-			"endDate": timeRange[1]
-		};
+	getPersons: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
+		this.url = this.urlBase+
+			(yearRange != undefined && yearRange != null ? typeof yearRange == 'number' ? '/year_range/'+yearRange+'/'+yearRange : '/year_range/'+yearRange[0]+'/'+yearRange[1] : '')+
+			(rangeType != undefined && rangeType != null ? '/range_type/'+rangeType : '')+
+			(gender != undefined && gender != null ? '/gender/'+gender : '')+
+			(place != undefined && place != null ? '/place/'+place : '')+
+			(placeRelation != undefined && placeRelation != null ? '/placerelation/'+placeRelation : '')+
+			(name != undefined && name != null ? '/name/'+name : '')+
+			(firstname != undefined && firstname != null ? '/firstname/'+firstname : '')+
+			(surname != undefined && surname != null ? '/surname/'+surname : '')+
+			(archive != undefined && archive != null ? '/archive/'+archive : '')
+		;
 
 		this.fetch({
-			reset: true,
-			data: this.searchData
+			reset: true
 		});
-	},
 
-	filtersToString: function(filters) {
-		if (filters && filters.length > 0) {		
-			var filterStrings = _.map(filters, function(filter) {
-				var filterString = '';
-				for (var name in filter) {
-					filterString += name+':('+(filter[name].join(','))+')';
-				}
-				return filterString;
-			});
-
-			return filterStrings.join(' ');
-		}
-		else {
-			return '';
-		}
+		this.trigger('fetch');
 	},
 
 	addPage: function(resultIndex) {
@@ -66,5 +52,11 @@ module.exports = Backbone.Collection.extend({
 				reset: true
 			});
 		}
+	},
+
+	parse: function(data) {
+		this.metadata = data.metadata;
+
+		return data.data;
 	}
 });

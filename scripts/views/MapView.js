@@ -41,8 +41,22 @@ module.exports = Backbone.View.extend({
 			maxZoom: 16
 		});
 
+		var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		});
+
+		var OpenStreetMap_DE = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		});
+
+		var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+		});
+
 		this.map = L.map(this.el, {
-			center: [54.525961, 15.255119], 
+			center: [47.45780, -31.15722], 
 			zoom: 4,
 			layers: [OpenMapSurfer_Roads],
 			scrollWheelZoom: false
@@ -50,6 +64,9 @@ module.exports = Backbone.View.extend({
 
 		L.control.layers({
 			'Open Map Surfer': OpenMapSurfer_Roads,
+			'Open Screet Map Mapnik': OpenStreetMap_Mapnik,
+			'Open Screet Map DE': OpenStreetMap_DE,
+			'ESTI World Imagery': Esri_WorldImagery,
 			'ESRI Gray': esriLayer
 		}).addTo(this.map);
 
@@ -169,7 +186,7 @@ module.exports = Backbone.View.extend({
 			_.each(dataModels, _.bind(function(model) {
 				var marker = L.circleMarker([model.get('lat'), model.get('lng')], {
 					radius: ((model.get('c')/maxValue)*30)+2,
-					fillColor: "#ff5a00",
+					fillColor: "#0030FE",
 					fillOpacity: 0.4,
 					color: '#000',
 					weight: 0.8

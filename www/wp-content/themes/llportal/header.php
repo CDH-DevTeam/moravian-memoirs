@@ -22,31 +22,33 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
 
-	<header id="masthead" class="site-header" role="banner">
-		<div class="container">
-			<div class="site-branding">
+<header id="masthead" class="site-header" role="banner">
+	<div class="container">
+		<div class="site-branding">
 
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 
-				<?php
-				$description = get_bloginfo( 'description', 'display' );
-				if ( $description || is_customize_preview() ) : ?>
-					<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
-				<?php
-				endif; ?>
+			<?php
+			$description = get_bloginfo( 'description', 'display' );
+			if ( $description || is_customize_preview() ) : ?>
+				<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
+			<?php
+			endif; ?>
 
-				<a class="map-button" href="<?php echo get_site_url(); ?>/map"><div class="overlay"></div><div class="label">Open map</div></a>
-				
-			</div>
+			<a class="map-button" href="<?php echo get_site_url(); ?>/map"><div class="overlay"></div><div class="label">Open map</div></a>
+			
 		</div>
+	</div>
 
-		<div class="nav-container">
-			<nav id="site-navigation" class="container main-navigation" role="navigation">
-				<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ) ); ?>
-			</nav>
-		</div>
+	<div class="nav-container">
+		<nav id="site-navigation" class="container main-navigation" role="navigation">
+			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_id' => 'primary-menu' ) ); ?>
+		</nav>
+	</div>
 
-	</header>
+</header>
 
+<?php if (get_page_template_slug() != 'map-page.php') { ?> 
+	<div class="page-content">
+<?php } ?>

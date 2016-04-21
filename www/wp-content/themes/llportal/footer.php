@@ -11,7 +11,9 @@
 
 ?>
 
-</div>
+<?php if (get_page_template_slug() != 'map-page.php') { ?> 
+	</div>
+<?php } ?>
 
 <footer id="colophon" class="site-footer" role="contentinfo">
 	<div class="container"
