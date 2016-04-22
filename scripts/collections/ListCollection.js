@@ -2,7 +2,7 @@ var Backbone = require('backbone');
 var _ = require('underscore');
 
 module.exports = Backbone.Collection.extend({
-	urlBase: 'http://localhost/moravian-api/v2/persons',
+	urlBase: 'http://moravianlives.org:8001/v2/persons',
 
 	getPersons: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
 		this.url = this.urlBase+
