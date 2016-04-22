@@ -953,6 +953,10 @@ select.form-input-settings {
 		.item-content {
 			max-height: 0;
 
+			padding: 0 35px;
+
+			font-size: 0.9rem;
+
 			overflow: hidden;
 
 			.transition(all 200ms ease-in-out);
@@ -961,18 +965,6 @@ select.form-input-settings {
 				margin-left: 25px;
     			margin-right: 25px;
     		}
-	
-			.date {
-
-			}
-
-			.name {
-
-			}
-
-			.party {
-
-			}
 		}
 
 		&.item-open {
@@ -1007,13 +999,13 @@ select.form-input-settings {
 			.item-content {
 				padding: 35px;
 
-				max-height: 1000px;
+				max-height: 10000px;
 			}
 		}
 	}
 
 	.map-container {
-		height: 400px;
+		height: 300px;
 
 		border: 1px solid @color-border;
 	}
@@ -1026,7 +1018,26 @@ select.form-input-settings {
 
 		table {
 			margin-bottom: 0;
+
+			.table-sub {
+				display: none;
+
+				padding: 15px;
+
+				border-left: 1px solid @color-border;
+				border-right: 1px solid @color-border;
+
+				background: #fbfbfb;
+
+				&.visible {
+					display: table-cell;
+				}
+			}
 		}
+	}
+
+	hr {
+		margin: 1.5rem 0;
 	}
 }
 

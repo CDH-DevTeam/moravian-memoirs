@@ -30,34 +30,61 @@
 		<div class="row">
 
 			<div class="six columns">
-
-				<div><strong>Birth place: </strong> <%= model.get('birthplacename') %>, <%= model.get('birthplacearea') %><br/>
-					<strong>Death place: </strong> <%= model.get('deathplacename') %>, <%= model.get('deathplacearea') %>
-					<br/><br/>
-
-					<% if (model.get('birthplacelat') || model.get('deathplacelat')) { %>
-						<div class="map-container"></div>
+				<p>
+					<strong>Birth place: </strong> <%= model.get('birthplacename') %>, <%= model.get('birthplacearea') %><br/>
+					<strong>Death place: </strong> <%= model.get('deathplacename') %>, <%= model.get('deathplacearea') %></p>
+					<% if (model.get('surname_maiden')) { %>
+						<p><strong>Maiden name:</strong> <%= model.get('surname_maiden') %><br/>
 					<% } %>
-				</div>
-
+					<% if (model.get('gender')) { %>
+						<strong>Gender:</strong> <%= model.get('gender') == 0 ? 'male' : model.get('gender') == 1 ? 'female' : '?' %><br/>
+					<% } %>
+					<% if (model.get('familystatus')) { %>
+						<strong>Marital status:</strong> <%= model.get('familystatus') %>
+					<% } %>
+				</p>
 			</div>
 
 			<div class="six columns">
-				<strong>Lebenslaufs</strong><br/>
+
+				<% if (model.get('birthplacelat') || model.get('deathplacelat')) { %>
+					<div class="map-container"></div>
+				<% } %>
+
+			</div>
+
+		</div>
+
+		<hr/>
+
+		<div class="row">
+
+			<div class="twelve columns">
+				<h4>Lebenslaufs</strong></h4>
 
 				<div class="table-container">
 					<table width="100%">
 						<tr>
 							<th>Source archive</th>
-							<th>Document ID</th>
+							<th>Document reference</th>
+							<th></th>
 						</tr>
-						<% _.each(model.get('documents'), function(document) { %>
+						<% _.each(model.get('documents'), function(document, index) { %>
 							<tr>
 				
-								<td><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %></td> 
-								<td><%= document.ll_id  %></td>
+								<td><%= document.comment || document.fulltext ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><%= document.comment || document.fulltext ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><%= document.ownhand == 1 ? 'Own hand' : ''  %></td>
 
 							</tr>
+							<tr>
+								<td colspan="3" class="table-sub table-info-<%= index %>">
+									<p><strong>Comment:</strong> <%= document.comment %></p>
+									<% if (document.fulltext) { %>
+										<button class="button">View</button>
+									<% } %>
+								</td>
+							</td>
 						<% }); %>
 					</table>
 
