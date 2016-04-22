@@ -15,13 +15,8 @@ module.exports = Backbone.View.extend({
 	},
 
 	events: {
-		'click .item-title': 'itemTitleClick',
 		'click .result-tabs a.tab': 'resultTabClick',
 		'click .load-more-button': 'loadMoreClick'
-	},
-
-	itemTitleClick: function(event) {
-		$(event.currentTarget).parent().toggleClass('item-open');
 	},
 
 	loadMoreClick: function() {
