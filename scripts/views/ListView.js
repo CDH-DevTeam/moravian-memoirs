@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend({
 		this.options = options;
 		this.collection = new ListCollection();
 		this.collection.on('reset', this.render, this);
-		this.collection.on('hitsupdate', this.hitsUpdate, this)
+		this.collection.on('update', this.hitsUpdate, this)
 
 		this.renderUi();
 	},
@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 	},
 
 	loadMoreClick: function() {
-		this.collection.addPage(this.resultIndex);
+		this.collection.addPage();
 	},
 
 	renderUi: function() {
@@ -29,48 +29,28 @@ module.exports = Backbone.View.extend({
 		this.$el.html(template({}));
 	},
 
-	lastQuery: '',
-	timeRange: [],
-
-	resultIndex: 0,
-
-	search: function(query, timeRange) {
-		this.lastQuery = query;
-		this.timeRange = timeRange;
-
-		this.collection.search(query, timeRange);
-
-		this.$el.find('.list-header-label').text('"'+query+'", '+timeRange[0]+'-'+timeRange[1]);
-
-		this.$el.addClass('loading');
-	},
-
 	render: function() {
-		this.resultIndex = 0;
-
 		this.renderList();
 	},
 
 	hitsUpdate: function() {
-		var newHits = this.collection.at(this.resultIndex).get('hits');
-		newHits = _.rest(newHits, this.collection.at(this.resultIndex).get('from_index'));
+		var newModels = _.rest(this.collection.models, this.collection.metadata.page+40);
 
-		_.each(newHits, _.bind(function(model, index) {
+		_.each(this.collection.models, _.bind(function(model, index) {
 			var newEl = $('<div class="list-item"/>');
 			this.$el.find('.list-container').append(newEl);
 
 			var itemView = new ListItemView({
 				el: newEl,
-				model: new Backbone.Model(model),
-				router: this.options.router,
-				parties: this.options.parties
+				model: model,
+				router: this.options.router
 			});		
 		}, this));
 
 		this.$el.find('.page-info').html(' '+(
-			Number(this.collection.metadata.page+20) > this.collection.metadata.total ? 
+			Number(this.collection.metadata.page+40) > this.collection.metadata.total ? 
 			this.collection.metadata.total :
-			Number(this.collection.metadata.page+20)
+			Number(this.collection.metadata.page+40)
 		)+' of '+this.collection.metadata.total);
 	},
 
@@ -95,11 +75,10 @@ module.exports = Backbone.View.extend({
 			}, this));
 		}
 
-
 		this.$el.find('.page-info').html(' '+(
-			Number(this.collection.metadata.page) > this.collection.metadata.total ? 
+			Number(this.collection.metadata.page+40) > this.collection.metadata.total ? 
 			this.collection.metadata.total :
-			Number(this.collection.metadata.page)
+			Number(this.collection.metadata.page+40)
 		)+' of '+this.collection.metadata.total);
 
 		this.$el.removeClass('loading');

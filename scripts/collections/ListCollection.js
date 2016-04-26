@@ -5,16 +5,28 @@ module.exports = Backbone.Collection.extend({
 	urlBase: 'http://moravianlives.org:8001/v2/persons',
 
 	getPersons: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
+		this.searchQuery = {
+			yearRange: yearRange,
+			rangeType: rangeType,
+			gender: gender,
+			place: place,
+			placeRelation: placeRelation,
+			name: name,
+			firstname: firstname,
+			surname: surname,
+			archive: archive
+		};
+
 		this.url = this.urlBase+
-			(yearRange != undefined && yearRange != null ? typeof yearRange == 'number' ? '/year_range/'+yearRange+'/'+yearRange : '/year_range/'+yearRange[0]+'/'+yearRange[1] : '')+
-			(rangeType != undefined && rangeType != null ? '/range_type/'+rangeType : '')+
-			(gender != undefined && gender != null ? '/gender/'+gender : '')+
-			(place != undefined && place != null ? '/place/'+place : '')+
-			(placeRelation != undefined && placeRelation != null ? '/placerelation/'+placeRelation : '')+
-			(name != undefined && name != null ? '/name/'+name : '')+
-			(firstname != undefined && firstname != null ? '/firstname/'+firstname : '')+
-			(surname != undefined && surname != null ? '/surname/'+surname : '')+
-			(archive != undefined && archive != null ? '/archive/'+archive : '')
+			(this.searchQuery.yearRange != undefined && this.searchQuery.yearRange != null ? typeof this.searchQuery.yearRange == 'number' ? '/year_range/'+this.searchQuery.yearRange+'/'+this.searchQuery.yearRange : '/year_range/'+this.searchQuery.yearRange[0]+'/'+this.searchQuery.yearRange[1] : '')+
+			(this.searchQuery.rangeType != undefined && this.searchQuery.rangeType != null ? '/range_type/'+this.searchQuery.rangeType : '')+
+			(this.searchQuery.gender != undefined && this.searchQuery.gender != null ? '/gender/'+this.searchQuery.gender : '')+
+			(this.searchQuery.place != undefined && this.searchQuery.place != null ? '/place/'+this.searchQuery.place : '')+
+			(this.searchQuery.placeRelation != undefined && this.searchQuery.placeRelation != null ? '/placerelation/'+this.searchQuery.placeRelation : '')+
+			(this.searchQuery.name != undefined && this.searchQuery.name != null ? '/name/'+this.searchQuery.name : '')+
+			(this.searchQuery.firstname != undefined && this.searchQuery.firstname != null ? '/firstname/'+this.searchQuery.firstname : '')+
+			(this.searchQuery.surname != undefined && this.searchQuery.surname != null ? '/surname/'+this.searchQuery.surname : '')+
+			(this.searchQuery.archive != undefined && this.searchQuery.archive != null ? '/archive/'+this.searchQuery.archive : '')
 		;
 
 		this.fetch({
@@ -24,37 +36,28 @@ module.exports = Backbone.Collection.extend({
 		this.trigger('fetch');
 	},
 
-	addPage: function(resultIndex) {
-		if (this.at(resultIndex).get('from_index')+20 < this.at(resultIndex).get('total_hit_count')) {
-			
-			this.at(resultIndex).set('from_index', this.at(resultIndex).get('from_index')+20);
-			this.searchData.fromIndex = this.at(resultIndex).get('from_index');
+	addPage: function() {
+		this.url = this.urlBase+
+			(this.searchQuery.yearRange != undefined && this.searchQuery.yearRange != null ? typeof this.searchQuery.yearRange == 'number' ? '/year_range/'+this.searchQuery.yearRange+'/'+this.searchQuery.yearRange : '/year_range/'+this.searchQuery.yearRange[0]+'/'+this.searchQuery.yearRange[1] : '')+
+			(this.searchQuery.rangeType != undefined && this.searchQuery.rangeType != null ? '/range_type/'+this.searchQuery.rangeType : '')+
+			(this.searchQuery.gender != undefined && this.searchQuery.gender != null ? '/gender/'+this.searchQuery.gender : '')+
+			(this.searchQuery.place != undefined && this.searchQuery.place != null ? '/place/'+this.searchQuery.place : '')+
+			(this.searchQuery.placeRelation != undefined && this.searchQuery.placeRelation != null ? '/placerelation/'+this.searchQuery.placeRelation : '')+
+			(this.searchQuery.name != undefined && this.searchQuery.name != null ? '/name/'+this.searchQuery.name : '')+
+			(this.searchQuery.firstname != undefined && this.searchQuery.firstname != null ? '/firstname/'+this.searchQuery.firstname : '')+
+			(this.searchQuery.surname != undefined && this.searchQuery.surname != null ? '/surname/'+this.searchQuery.surname : '')+
+			(this.searchQuery.archive != undefined && this.searchQuery.archive != null ? '/archive/'+this.searchQuery.archive : '')+
+			'/page/'+(this.metadata.page+40)
+		;
 
-			var tempCollection = new Backbone.Collection();
-			tempCollection.model = ListItemModel;
-			tempCollection.url = this.url;
-			tempCollection.on('reset', _.bind(function()  {
+		this.fetch({
+			add: true
+		});
 
-				this.at(resultIndex).set('hits', _.union(this.at(resultIndex).get('hits'), tempCollection.at(0).get('hits')));
-
-				this.trigger('hitsupdate');
-			}, this));
-
-			var searchData = {
-				searchPhrase: this.at(resultIndex).get('search_query')+' '+this.filtersToString(this.at(resultIndex).get('filters')),
-				startDate: this.searchData.startDate,
-				endDate: this.searchData.endDate,
-				fromIndex: this.searchData.fromIndex
-			};
-
-			tempCollection.fetch({
-				data: searchData,
-				reset: true
-			});
-		}
 	},
 
 	parse: function(data) {
+		data.metadata.page = Number(data.metadata.page);
 		this.metadata = data.metadata;
 
 		return data.data;

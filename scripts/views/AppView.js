@@ -120,7 +120,6 @@ module.exports = Backbone.View.extend({
 	},
 
 	updateMapButtonClick: function() {
-		console.log('navigate');
 		this.router.navigate(
 				this.appMode+
 				(this.appMode == 'places' && this.currentPlace != undefined ? '/place/'+this.currentPlace : '')+
@@ -264,7 +263,6 @@ module.exports = Backbone.View.extend({
 	},
 
 	getPlace: function(placeId) {
-		console.log('getPlace');
 		if (this.placeView == null) {
 			var PlaceView = require('../views/PlaceView');
 			this.placeView = new PlaceView({

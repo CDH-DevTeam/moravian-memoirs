@@ -159,10 +159,7 @@ module.exports = Backbone.View.extend({
 			model: this.model
 		}));
 
-		console.log(this.$el.find('.table-item'));
-
 		_.each(this.$el.find('.table-item'), _.bind(function(item) {
-			console.log('table-item');
 			$(item).click(_.bind(function(event) {
 				event.preventDefault();
 				this.$el.find('.table-sub.table-info-'+$(item).data('index')).toggleClass('visible');
