@@ -2,6 +2,7 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 var _ = require('underscore');
 require('../lib/leaflet');
+require('../lib/jquery.truncate');
 
 module.exports = Backbone.View.extend({
 	initialize: function(options) {
@@ -31,12 +32,10 @@ module.exports = Backbone.View.extend({
 		console.log('fullTextClick');
 		event.preventDefault();
 
-		var htmlString = this.model.get('documents')[$(event.currentTarget).data('index')].doc_text;
-
 		var template = _.template($("#textViewerTemplate").html());
 		$('#textViewer').html(template({
+			document: this.model.get('documents')[$(event.currentTarget).data('index')],
 			title: this.model.get('documents')[$(event.currentTarget).data('index')].surname+', '+this.model.get('documents')[$(event.currentTarget).data('index')].firstname,
-			html: htmlString,
 			images: this.model.get('documents')[$(event.currentTarget).data('index')].docimages ? JSON.parse(this.model.get('documents')[$(event.currentTarget).data('index')].docimages) : undefined
 		}));
 
@@ -148,7 +147,8 @@ module.exports = Backbone.View.extend({
 		var template = _.template($("#listItemTemplate").html());
 
 		this.$el.html(template({
-			model: this.model
+			model: this.model,
+			jQuery: $
 		}));
 
 		_.each(this.$el.find('.table-item'), _.bind(function(item) {

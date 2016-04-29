@@ -84,6 +84,7 @@
 									<% } %>
 
 									<% if (document.doc_text) { %>
+										<%= jQuery.truncate(document.doc_text, {length: 600 }) %>
 										<button class="button full-text-button" data-index="<%= index %>">View full text</button>
 									<% } %>
 								</td>
