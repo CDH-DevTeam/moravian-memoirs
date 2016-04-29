@@ -1,6 +1,6 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
-var _ = require('underscore');
+window._ = require('underscore');
 var ListCollection = require('./../collections/ListCollection');
 var ListItemView = require('./ListItemView.js');
 
@@ -34,9 +34,9 @@ module.exports = Backbone.View.extend({
 	},
 
 	hitsUpdate: function() {
-		var newModels = _.rest(this.collection.models, this.collection.metadata.page+40);
+		var newModels = _.rest(this.collection.models, this.collection.metadata.page);
 
-		_.each(this.collection.models, _.bind(function(model, index) {
+		_.each(newModels, _.bind(function(model, index) {
 			var newEl = $('<div class="list-item"/>');
 			this.$el.find('.list-container').append(newEl);
 
@@ -70,7 +70,7 @@ module.exports = Backbone.View.extend({
 				var itemView = new ListItemView({
 					el: newEl,
 					model: model,
-					router: this.options.routet
+					router: this.options.router
 				});		
 			}, this));
 		}

@@ -72,16 +72,19 @@
 						<% _.each(model.get('documents'), function(document, index) { %>
 							<tr>
 				
-								<td><%= document.comment || document.fulltext ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
-								<td><%= document.comment || document.fulltext ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><%= document.comment || document.doc_text ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><%= document.comment || document.doc_text ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 								<td><%= document.ownhand == 1 ? 'Own hand' : ''  %></td>
 
 							</tr>
 							<tr>
 								<td colspan="3" class="table-sub table-info-<%= index %>">
-									<p><strong>Comment:</strong> <%= document.comment %></p>
-									<% if (document.fulltext) { %>
-										<button class="button">View</button>
+									<% if (document.comment) { %>
+										<p><strong>Comment:</strong> <%= document.comment %></p>
+									<% } %>
+
+									<% if (document.doc_text) { %>
+										<button class="button full-text-button" data-index="<%= index %>">View full text</button>
 									<% } %>
 								</td>
 							</td>

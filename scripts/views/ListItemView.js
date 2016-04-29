@@ -28,40 +28,32 @@ module.exports = Backbone.View.extend({
 	},
 
 	fullTextClick: function(event) {
+		console.log('fullTextClick');
 		event.preventDefault();
 
-		var htmlString = this.model.get('_source').dokument.html;
-		var htmlEl = $(htmlString);
-
-		htmlString = htmlString.split('<style>').join('<!--').split('</style>').join('-->');
+		var htmlString = this.model.get('documents')[$(event.currentTarget).data('index')].doc_text;
 
 		var template = _.template($("#textViewerTemplate").html());
 		$('#textViewer').html(template({
-			title: this.model.get('_source').dokument.titel,
-			html: htmlString
+			title: this.model.get('documents')[$(event.currentTarget).data('index')].surname+', '+this.model.get('documents')[$(event.currentTarget).data('index')].firstname,
+			html: htmlString,
+			images: this.model.get('documents')[$(event.currentTarget).data('index')].docimages ? JSON.parse(this.model.get('documents')[$(event.currentTarget).data('index')].docimages) : undefined
 		}));
 
 		$('html').addClass('has-overlay');
 
 		$('#textViewer .close-button').click(_.bind(function() {
-			history.go(-1);
+				$('html').removeClass('has-overlay');
+				$('#textViewer').removeClass('visible');
+//			history.go(-1);
 		}, this));
 
-		_.each($('#textViewer .text-content a'), function(link) {
-			$(link).click(function(event) {
-				event.preventDefault();
-				var scrollPos = $('#textViewer').offset().top-$(link).offset().top+$(document.body).scrollTop();
-				$('#textViewer .text-content').animate({
-					scrollTop: scrollPos
-				}, 500);
-			});
-		});
-
 		$('#textViewer').addClass('visible');
-
+/*
 		this.options.router.navigate('view/document', {
 			trigger: false
 		});
+*/
 	},
 
 	renderMap: function() {

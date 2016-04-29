@@ -14,12 +14,15 @@ module.exports = Backbone.View.extend({
 
 		this.searchCriterias = {};
 
-		this.render();
-
 		this.router = new AppRouter();
+
+		this.render();
 
 		this.router.on('route:places', _.bind(function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive) {
 			this.setAppMode('places');
+
+			$('html').removeClass('has-overlay');
+			$('#textViewer').removeClass('visible');
 
 			if (yearRange != null) {
 				this.getPlaces(yearRange.split(';'), rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive);
@@ -29,6 +32,9 @@ module.exports = Backbone.View.extend({
 		this.router.on('route:movements', _.bind(function(yearRange, rangeType, gender, name) {
 			this.setAppMode('movements');
 
+			$('html').removeClass('has-overlay');
+			$('#textViewer').removeClass('visible');
+
 			if (yearRange != null) {
 				this.getMovements(yearRange.split(';'), rangeType, gender);				
 			}
@@ -36,6 +42,9 @@ module.exports = Backbone.View.extend({
 
 		this.router.on('route:default', _.bind(function() {
 			this.setAppMode('places');
+
+			$('html').removeClass('has-overlay');
+			$('#textViewer').removeClass('visible');
 		}, this));
 
 		Backbone.history.start();
@@ -45,6 +54,7 @@ module.exports = Backbone.View.extend({
 		'click .viewmode-buttons a': 'viewModeButtonClick',
 		'click .update-map-button': 'updateMapButtonClick',
 		'click .more-form-button': 'moreFormButtonClick',
+		'keyup .map-search-control': 'searchControlKeyUp',
 		'mouseover .map-toolbar': 'toolbarMouseEnter',
 		'mouseout .map-toolbar': 'toolbarMouseLeave'
 	},
@@ -79,6 +89,12 @@ module.exports = Backbone.View.extend({
 
 	moreFormButtonClick: function() {
 		this.$el.find('.map-toolbar .form-extra').toggleClass('visible');
+	},
+
+	searchControlKeyUp: function(event) {
+		if (event.keyCode == 13) {
+			this.updateMapButtonClick();
+		}
 	},
 
 	toolbarMouseEnter: function() {

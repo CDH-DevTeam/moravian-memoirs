@@ -51,7 +51,11 @@ module.exports = Backbone.Collection.extend({
 		;
 
 		this.fetch({
-			add: true
+			add: true,
+			remove: false,
+			success: _.bind(function() {
+				this.trigger('collectionUpdated');
+			}, this)
 		});
 
 	},

@@ -66,6 +66,8 @@
 
 </div>
 
+<div id="textViewer" class="text-viewer"></div>
+
 <?php
 
 	if (!function_exists( 'get_home_path' )) {
@@ -81,6 +83,7 @@
 	include get_home_path()."view-templates/hitlistUiTemplate.php";
 	include get_home_path()."view-templates/listItemTemplate.php";
 	include get_home_path()."view-templates/graphViewTemplate.php";
+	include get_home_path()."view-templates/textViewerTemplate.php";
 
 ?>
 
