@@ -60,11 +60,12 @@
 		<div class="row">
 
 			<div class="twelve columns">
-				<h4>Lebenslaufs</strong></h4>
+				<h4>Memoirs</h4>
 
 				<div class="table-container">
 					<table width="100%">
 						<tr>
+							<th>Name</th>
 							<th>Source archive</th>
 							<th>Document reference</th>
 							<th></th>
@@ -72,13 +73,28 @@
 						<% _.each(model.get('documents'), function(document, index) { %>
 							<tr>
 				
-								<td><%= document.comment || document.doc_text ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
-								<td><%= document.comment || document.doc_text ? '<a href="#" class="table-item" data-index="'+index+'">' : '' %><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.surname %><%= document.surname && document.firstname ? ', ' : '' %><%= document.firstname %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+
+								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 								<td><%= document.ownhand == 1 ? 'Own hand' : ''  %></td>
 
 							</tr>
 							<tr>
-								<td colspan="3" class="table-sub table-info-<%= index %>">
+								<td colspan="4" class="table-sub table-info-<%= index %>">
+									<p><strong><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %></strong> - <strong><%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></strong></p>
+									<% if (document.birthplacename) { %>
+										<p><strong>Birth place:</strong> <%= document.birthplacename %></p>
+									<% } %>
+
+									<% if (document.deathplacename) { %>
+										<p><strong>Death place:</strong> <%= document.deathplacename %></p>
+									<% } %>
+
+									<% if (document.surname_literal) { %>
+										<p><strong>Surname literal:</strong> <%= document.surname_literal %></p>
+									<% } %>
+
 									<% if (document.comment) { %>
 										<p><strong>Comment:</strong> <%= document.comment %></p>
 									<% } %>

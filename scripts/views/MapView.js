@@ -154,65 +154,80 @@ module.exports = Backbone.View.extend({
 
 		if (this.viewMode == 'markers' || this.viewMode == 'clusters') {			
 			this.markers.clearLayers();
-			_.each(dataModels, _.bind(function(model) {
-				var marker = L.marker([model.get('lat'), model.get('lng')], {
-					title: model.get('name'),
-					icon: this.markerIcon
-				}).bindPopup('<strong>'+model.get('name')+'</strong><br/><i>'+model.get('area')+'</i><br/>'+model.get('c')+' '+(model.get('c') == 1 ? 'person' : 'persons')+'<br/><br/><a href="#" class="place-view-link" data-placeId="'+model.get('id')+'">More information</a>')
-					.on('popupopen', _.bind(function(event) {
-						_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
-							$(linkEl).click(_.bind(function(event) {
-								event.preventDefault();
-								this.trigger('viewPlace', {
-									placeId: $(linkEl).data('placeid')
-								});
+
+			if (dataModels.length > 0) {
+				_.each(dataModels, _.bind(function(model) {
+					var template = _.template($("#mapPopupTemplate").html());
+					var popupHtml = template({
+						model: model
+					});
+
+					var marker = L.marker([model.get('lat'), model.get('lng')], {
+						title: model.get('name'),
+						icon: this.markerIcon
+					}).bindPopup(popupHtml)
+						.on('popupopen', _.bind(function(event) {
+							_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
+								$(linkEl).click(_.bind(function(event) {
+									event.preventDefault();
+									this.trigger('viewPlace', {
+										placeId: $(linkEl).data('placeid')
+									});
+								}, this));
 							}, this));
 						}, this));
-					}, this));
 
-				this.markers.addLayer(marker);
-			}, this));
+					this.markers.addLayer(marker);
+				}, this));
+			}
 		}
 		if (this.viewMode == 'circles') {
 			this.markers.clearLayers();
-			var minValue = _.min(dataModels, function(model) {
-				return Number(model.get('c'));
-			}).get('c');
+			
+			if (dataModels.length > 0) {
+				var minValue = _.min(dataModels, function(model) {
+					return Number(model.get('c'));
+				}).get('c');
 
-			var maxValue = _.max(dataModels, function(model) {
-				return Number(model.get('c'));
-			}).get('c');
+				var maxValue = _.max(dataModels, function(model) {
+					return Number(model.get('c'));
+				}).get('c');
 
-			_.each(dataModels, _.bind(function(model) {
-				var marker = L.circleMarker([model.get('lat'), model.get('lng')], {
-					radius: ((model.get('c')/maxValue)*30)+2,
-					fillColor: "#0030FE",
-					fillOpacity: 0.4,
-					color: '#000',
-					weight: 0.8
-				}).bindPopup('<strong>'+model.get('name')+'</strong><br/><i>'+model.get('area')+'</i><br/>'+model.get('c')+' '+(model.get('c') == 1 ? 'person' : 'persons')+'<br/><br/><a href="#" class="place-view-link" data-placeId="'+model.get('id')+'">More information</a>')
-					.on('popupopen', _.bind(function(event) {
-						_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
-							$(linkEl).click(_.bind(function(event) {
-								event.preventDefault();
-								this.trigger('viewPlace', {
-									placeId: $(linkEl).data('placeid')
-								});
+				_.each(dataModels, _.bind(function(model) {
+					var template = _.template($("#mapPopupTemplate").html());
+					var popupHtml = template({
+						model: model
+					});
+
+					var marker = L.circleMarker([model.get('lat'), model.get('lng')], {
+						radius: ((model.get('c')/maxValue)*30)+2,
+						fillColor: "#0030FE",
+						fillOpacity: 0.4,
+						color: '#000',
+						weight: 0.8
+					}).bindPopup(popupHtml)
+						.on('popupopen', _.bind(function(event) {
+							_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
+								$(linkEl).click(_.bind(function(event) {
+									event.preventDefault();
+									this.trigger('viewPlace', {
+										placeId: $(linkEl).data('placeid')
+									});
+								}, this));
 							}, this));
 						}, this));
-					}, this));
 
-				this.markers.addLayer(marker);
-			}, this));
+					this.markers.addLayer(marker);
+				}, this));
 
-			if (this.legendsEl) {
-				console.log('render legends')
-				var template = _.template($("#mapLegendsTemplate").html());
-				this.legendsEl.html(template({
-					minValue: Number(minValue),
-					maxValue: Number(maxValue)
-				}));
-				this.legendsEl.addClass('visible');
+				if (this.legendsEl) {
+					var template = _.template($("#mapLegendsTemplate").html());
+					this.legendsEl.html(template({
+						minValue: Number(minValue),
+						maxValue: Number(maxValue)
+					}));
+					this.legendsEl.addClass('visible');
+				}
 			}
 		}
 		if (this.viewMode == 'heatmap') {

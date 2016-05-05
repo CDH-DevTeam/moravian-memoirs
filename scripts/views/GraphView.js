@@ -94,7 +94,7 @@ module.exports = Backbone.View.extend({
 		d3.selectAll('svg#graphContainer'+this.cid+' > *').remove();
 
 		// Check if we have results or not
-		if (this.collection.length == 0) {
+		if (this.collection.at(0).get('data').length == 0) {
 			this.trigger('zeroresults');
 			this.$el.addClass('no-results');
 
@@ -359,7 +359,8 @@ module.exports = Backbone.View.extend({
 			Adjust the visual time range overlay.
 		*/
 		this.timeOverlay = values;
-		if (this.timeOverlay[0] == this.startYear && this.timeOverlay[1] == this.endYear) {
+
+		if (Number(this.timeOverlay[0]) == this.startYear && Number(this.timeOverlay[1]) == this.endYear) {
 			this.vis.select('rect.timerange-overlay')
 				.transition()
 				.duration(100)

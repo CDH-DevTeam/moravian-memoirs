@@ -84,6 +84,7 @@
 	include get_home_path()."view-templates/listItemTemplate.php";
 	include get_home_path()."view-templates/graphViewTemplate.php";
 	include get_home_path()."view-templates/textViewerTemplate.php";
+	include get_home_path()."view-templates/mapPopupTemplate.php";
 
 ?>
 

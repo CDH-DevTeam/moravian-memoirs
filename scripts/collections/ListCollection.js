@@ -64,6 +64,6 @@ module.exports = Backbone.Collection.extend({
 		data.metadata.page = Number(data.metadata.page);
 		this.metadata = data.metadata;
 
-		return data.data;
+		return data.data ? data.data : [];
 	}
 });
