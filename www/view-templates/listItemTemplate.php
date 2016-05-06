@@ -82,22 +82,27 @@
 							</tr>
 							<tr>
 								<td colspan="4" class="table-sub table-info-<%= index %>">
-									<p><strong><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %></strong> - <strong><%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></strong></p>
+									<p><strong><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %></strong> - <strong><%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></strong><br/>
 									<% if (document.birthplacename) { %>
-										<p><strong>Birth place:</strong> <%= document.birthplacename %></p>
+										<strong>Birth place:</strong> <%= document.birthplacename %><br/>
 									<% } %>
 
 									<% if (document.deathplacename) { %>
-										<p><strong>Death place:</strong> <%= document.deathplacename %></p>
+										<strong>Death place:</strong> <%= document.deathplacename %><br/>
 									<% } %>
 
 									<% if (document.surname_literal) { %>
-										<p><strong>Surname literal:</strong> <%= document.surname_literal %></p>
+										<strong>Surname literal:</strong> <%= document.surname_literal %><br/>
 									<% } %>
 
 									<% if (document.comment) { %>
-										<p><strong>Comment:</strong> <%= document.comment %></p>
+										<strong>Comment:</strong> <%= document.comment %><br/>
 									<% } %>
+
+									<% if (document.page) { %>
+										<strong>Page:</strong> <%= document.page %><br/>
+									<% } %>
+									</p>
 
 									<% if (document.doc_text) { %>
 										<%= jQuery.truncate(document.doc_text, {length: 600 }) %>
