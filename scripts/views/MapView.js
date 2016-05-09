@@ -138,8 +138,8 @@ module.exports = Backbone.View.extend({
 			if (this.polyLines == undefined || !this.map.hasLayer(this.polyLines)) {
 				this.polyLines = L.multiPolyline([], {
 					weight: 0.5,
-					color: '#333',
-					opacity: 0.4
+					color: '#000',
+					opacity: 0.6
 				});
 				this.polyLines.addTo(this.map);
 			}
