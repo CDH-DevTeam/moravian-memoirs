@@ -151,10 +151,15 @@ module.exports = Backbone.View.extend({
 			jQuery: $
 		}));
 
-		_.each(this.$el.find('.table-item'), _.bind(function(item) {
+		_.each(this.$el.find('tr.table-item'), _.bind(function(item) {
+			$(item).hover(function() {
+				$(this).addClass('hover');
+			}, function() {
+				$(this).removeClass('hover');
+			});
 			$(item).click(_.bind(function(event) {
 				event.preventDefault();
-				this.$el.find('.table-sub.table-info-'+$(item).data('index')).toggleClass('visible');
+				this.$el.find('.table-info-'+$(item).data('index')).toggleClass('visible');
 			}, this));
 		}, this));
 	}

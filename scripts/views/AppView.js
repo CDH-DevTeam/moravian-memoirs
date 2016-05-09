@@ -29,14 +29,14 @@ module.exports = Backbone.View.extend({
 			}
 		}, this));
 
-		this.router.on('route:movements', _.bind(function(yearRange, rangeType, gender, name) {
+		this.router.on('route:movements', _.bind(function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
 			this.setAppMode('movements');
 
 			$('html').removeClass('has-overlay');
 			$('#textViewer').removeClass('visible');
 
 			if (yearRange != null) {
-				this.getMovements(yearRange.split(';'), rangeType, gender);				
+				this.getMovements(yearRange.split(';'), rangeType, gender, place, placeRelation, name, firstname, surname, archive);				
 			}
 		}, this));
 
@@ -127,10 +127,16 @@ module.exports = Backbone.View.extend({
 		this.updateMap();
 	},
 
-	getMovements: function(yearRange, rangeType, gender) {
+	getMovements: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
 		this.searchCriterias.yearRange = yearRange;
 		this.searchCriterias.rangeType = rangeType;
 		this.searchCriterias.gender = gender;
+		this.searchCriterias.place = place;
+		this.searchCriterias.placeRelation = placeRelation;
+		this.searchCriterias.name = name;
+		this.searchCriterias.firstname = firstname;
+		this.searchCriterias.surname = surname;
+		this.searchCriterias.archive = archive;
 
 		this.updateMap();
 	},
@@ -211,30 +217,6 @@ module.exports = Backbone.View.extend({
 				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
 				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
 			);
-
-			this.listView.collection.getPersons(
-				this.searchCriterias.yearRange,
-				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
-				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
-				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
-				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
-				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
-				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
-				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
-				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
-			);
-
-			this.graphView.collection.getYearData(
-				this.searchCriterias.yearRange,
-				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
-				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
-				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
-				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
-				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
-				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
-				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
-				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
-			);
 /*
 			if (this.currentPlace != undefined) {
 				this.placeView.collection.getPersons(
@@ -252,9 +234,39 @@ module.exports = Backbone.View.extend({
 			this.mapView.collection.getMovements(
 				this.searchCriterias.yearRange,
 				this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
-				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender
+				this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+				this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+				this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
 			);
 		}
+
+		this.listView.collection.getPersons(
+			this.searchCriterias.yearRange,
+			this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
+			this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+			this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+			this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+			this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+			this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+			this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+		);
+
+		this.graphView.collection.getYearData(
+			this.searchCriterias.yearRange,
+			this.searchCriterias.rangeType == 'initial' || this.searchCriterias.rangeType == 'all' ? null : this.searchCriterias.rangeType,
+			this.searchCriterias.gender == 'initial' ? null : this.searchCriterias.gender,
+			this.searchCriterias.place == '' ? null : this.searchCriterias.place,
+			this.searchCriterias.placeRelation == 'initial' ? null : this.searchCriterias.placeRelation,
+			this.searchCriterias.name == '' ? null : this.searchCriterias.name,
+			this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
+			this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
+			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+		);
 	},
 
 	renderSearchCriteria: function() {

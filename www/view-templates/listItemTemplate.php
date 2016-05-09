@@ -71,12 +71,12 @@
 							<th></th>
 						</tr>
 						<% _.each(model.get('documents'), function(document, index) { %>
-							<tr>
+							<tr class="table-item table-title table-info-<%= index %>" data-index="<%= index %>">
 				
-								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.surname %><%= document.surname && document.firstname ? ', ' : '' %><%= document.firstname %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><a href="#"><%= document.surname %><%= document.surname && document.firstname ? ', ' : '' %><%= document.firstname %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 
-								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
-								<td><a href="#" class="table-item" data-index="<%= index %>"><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><a href="#"><%= document.archive == 1 ? 'Herrnhut' : document.archive == 2 ? 'Bethlehem' : 'Unknown' %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
+								<td><a href="#"><%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 								<td><%= document.ownhand == 1 ? 'Own hand' : ''  %></td>
 
 							</tr>
