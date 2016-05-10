@@ -99,7 +99,7 @@
 										<strong>Comment:</strong> <%= document.comment %><br/>
 									<% } %>
 
-									<% if (document.page) { %>
+									<% if (document.page && Number(document.page) != 0) { %>
 										<strong>Page:</strong> <%= document.page %><br/>
 									<% } %>
 									</p>

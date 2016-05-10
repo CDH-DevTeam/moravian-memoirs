@@ -98,7 +98,6 @@ module.exports = Backbone.View.extend({
 	},
 
 	toolbarMouseEnter: function() {
-//		this.$el.find('.map-toolbar .form-extra').addClass('visible');
 		this.mouseOnForm = true;
 	},
 
@@ -267,6 +266,8 @@ module.exports = Backbone.View.extend({
 			this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
 			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
 		);
+
+		this.$el.find('.hitlist-container').css('display', 'block');
 	},
 
 	renderSearchCriteria: function() {
@@ -411,29 +412,20 @@ module.exports = Backbone.View.extend({
 		});
 
 		this.initSlider();
-/*
-		setTimeout(_.bind(function() {
-			$('html, body').animate({
-				scrollTop: this.$el.offset().top
-			}, 1000);
-		}, this), 500);
-*/
+
 		$(window).scroll(_.bind(function(event) {
 			var scrollTop = $(window).scrollTop();
 
 			if (scrollTop < 260) {
-//				this.$el.removeClass('fixed-map-ui');
 				this.$el.removeClass('fixed-search-form');
 			}
 			else {
-//				this.$el.addClass('fixed-map-ui');
 				this.$el.addClass('fixed-search-form');
 			}
 		}, this));
 
 		var scrollTop = $(window).scrollTop();
 		if (scrollTop > 260) {
-//			this.$el.addClass('fixed-map-ui');
 			this.$el.addClass('fixed-search-form');
 		}
 

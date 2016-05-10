@@ -16,9 +16,11 @@
 <?php } ?>
 
 <footer id="colophon" class="site-footer" role="contentinfo">
-	<div class="container"
+	<div class="container">
 		<div class="row">
-			<div class="twelve column">Göteborg Universitet</div>
+			<div class="twelve column">
+				<?php dynamic_sidebar( 'footer' ); ?>
+			</div>
 		</div>
 	</div>
 </footer>

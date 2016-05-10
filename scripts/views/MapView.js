@@ -67,7 +67,7 @@ module.exports = Backbone.View.extend({
 			'Open Map Surfer': OpenMapSurfer_Roads,
 			'Open Screet Map Mapnik': OpenStreetMap_Mapnik,
 			'Open Screet Map DE': OpenStreetMap_DE,
-			'ESTI World Imagery': Esri_WorldImagery,
+			'ESRI World Imagery': Esri_WorldImagery,
 			'ESRI Gray': esriLayer
 		}).addTo(this.map);
 
