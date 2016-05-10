@@ -350,16 +350,31 @@ module.exports = Backbone.View.extend({
 			this.$el.find('.map-progress').addClass('visible');
 		}, this));
 		this.mapView.on('viewPlace', _.bind(function(event) {
-			this.newPlace = true;
-			this.router.navigate(
-					'places'+
-					('/place/'+event.placeId)+
-					('/year_range/'+this.searchCriterias.yearRange.join(';'))+
-					(this.searchCriterias.rangeType && this.searchCriterias.rangeType != 'initial' ? '/range_type/'+this.searchCriterias.rangeType : '')+
-					(this.searchCriterias.relationType && this.searchCriterias.relationType != 'initial' ? '/relation/'+this.searchCriterias.relationType : '')+
-					(this.searchCriterias.gender && this.searchCriterias.gender != 'initial' ? '/gender/'+this.searchCriterias.gender : '')
-			);
-			this.getPlace(event.placeId);
+			var RouteParser = require('route-parser');
+			var route = new RouteParser('places(/)(year_range/:range)(/)(range_type/:rangetype)(/)(relation/:relation)(/)(gender/:gender)(/)(place/:place)(/)(placerelation/:placerelation)(/)(name/:name)(/)(firstname/:firstname)(/)(surname/:surname)(/)(archive/:archive)');
+			console.log(window.location.hash.replace('#', ''));
+			var routeParams = route.match(window.location.hash.replace('#', ''));
+
+			if (routeParams) {
+				this.router.navigate(
+						this.appMode+
+						(this.appMode == 'places' && this.currentPlace != undefined ? '/place/'+this.currentPlace : '')+
+						('/year_range/'+routeParams.range)+
+						(routeParams.rangetype ? '/range_type/'+routeParams.rangetype : '')+
+						(routeParams.relation ? '/relation/'+routeParams.relation : '')+
+						(routeParams.gender ? '/gender/'+routeParams.gender : '')+
+						(routeParams.place = '/place/'+event.placeName)+
+						(event.placeRelation != 'both' ? '/placerelation/'+event.placeRelation : '')+
+						(routeParams.name ? '/name/'+routeParams.name : '')+
+						(routeParams.firstname ? '/firstname/'+routeParams.firstname : '')+
+						(routeParams.surname ? '/surname/'+routeParams.surname : '')+
+						(routeParams.archive ? '/archive/'+routeParams.archive : ''),
+					{
+						trigger: true
+					}
+				);
+			}
+
 		}, this));
 
 		this.mapView.collection.on('reset', _.bind(function() {

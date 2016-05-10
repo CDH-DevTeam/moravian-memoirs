@@ -58,6 +58,7 @@ module.exports = Backbone.View.extend({
 		this.map = L.map(this.el, {
 			center: [47.45780, -31.15722], 
 			zoom: 4,
+			minZoom: 3,
 			layers: [OpenMapSurfer_Roads],
 			scrollWheelZoom: false
 		});
@@ -171,7 +172,9 @@ module.exports = Backbone.View.extend({
 								$(linkEl).click(_.bind(function(event) {
 									event.preventDefault();
 									this.trigger('viewPlace', {
-										placeId: $(linkEl).data('placeid')
+										placeId: $(linkEl).data('place-id'),
+										placeName: $(linkEl).data('place-name'),
+										placeRelation: $(linkEl).data('action')
 									});
 								}, this));
 							}, this));
@@ -211,7 +214,9 @@ module.exports = Backbone.View.extend({
 								$(linkEl).click(_.bind(function(event) {
 									event.preventDefault();
 									this.trigger('viewPlace', {
-										placeId: $(linkEl).data('placeid')
+										placeId: $(linkEl).data('place-id'),
+										placeName: $(linkEl).data('place-name'),
+										placeRelation: $(linkEl).data('action')
 									});
 								}, this));
 							}, this));
