@@ -432,7 +432,7 @@ module.exports = Backbone.View.extend({
 		}, this));
 
 		var scrollTop = $(window).scrollTop();
-		if (scrollTop > 320) {
+		if (scrollTop > 260) {
 //			this.$el.addClass('fixed-map-ui');
 			this.$el.addClass('fixed-search-form');
 		}
