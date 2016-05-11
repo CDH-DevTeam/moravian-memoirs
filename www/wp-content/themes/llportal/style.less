@@ -926,7 +926,7 @@ select.form-input-settings {
 
 			color: #000;
 
-			background: #FAFAFA;
+			background-color: #FAFAFA;
 
 			box-sizing: border-box;
 
@@ -956,7 +956,7 @@ select.form-input-settings {
 
 				color: @color-text-gray;
 
-				background: #FAFAFA;
+				background-color: #FAFAFA;
 
 				.transition(all 200ms ease-in-out);
 
@@ -1030,12 +1030,22 @@ select.form-input-settings {
 				}
 			}
 
+			&.has-document {
+				background-image: url('img/icon-document.png');
+				background-repeat: no-repeat;
+				background-position: 25px 16px;
+
+				.title {
+					padding-left: 30px;
+				}
+			}
+
 			&:hover {
-				background: @color-background-gray;
+				background-color: @color-background-gray;
 
 				.title-attribs {
 					color: #000;
-					background: @color-background-gray;
+					background-color: @color-background-gray;
 				}
 			}
 		}
@@ -1063,7 +1073,7 @@ select.form-input-settings {
 			margin-left: -5px;
 			margin-right: -5px;
 
-			background: #fff;
+			background-color: #fff;
 
 			border: 1px solid @color-border;
 
@@ -1077,12 +1087,12 @@ select.form-input-settings {
 			.item-title {
 				border-bottom: 1px solid @color-border;
 
-				background: #fff;
+				background-color: #fff;
 
 				.title-attribs, &:hover .title-attribs {
 					color: #000;
 
-					background: #fff;
+					background-color: #fff;
 				}
 			}
 
@@ -1118,6 +1128,17 @@ select.form-input-settings {
 
 				&.visible {
 					font-weight: bold;
+				}
+
+				&.has-document {
+					td:first-child {
+						padding-left: 25px;
+					
+						background-image: url(img/icon-document.png);
+						background-repeat: no-repeat;
+						background-position: 0px 15px;
+						background-size: 14px 18px;
+					}
 				}
 			}
 
@@ -1389,5 +1410,55 @@ select.form-input-settings {
 		text {
 			.transform(translateX(-5px));
 		}
+	}
+}
+
+.entry-content {
+	h2, h3, h4, h5 {
+		clear: both;
+	}
+
+	img {
+	    border: 5px solid @color-background-gray;
+		border-radius: 3px;
+		box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.54);
+
+		&.alignleft {
+			float: left;
+
+			margin: 0 20px 20px 0;
+		}
+	}
+
+	figure {
+		margin: 20px 0;
+		padding: 5px;
+
+		border-radius: 3px;
+		box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.54);
+
+		background: #F1F1F1;
+
+		figcaption {
+			padding: 4px 5px 5px 5px;
+			
+			color: #4A4A4A;
+			font-size: 1.4rem;
+			text-align: center;
+			font-style: italic;
+		}
+	
+		img {
+			border: none;
+			border-radius: 0;
+			box-shadow: none;
+		}
+	}
+
+	ul {
+		margin-left: 20px;
+
+
+		list-style: circle;
 	}
 }

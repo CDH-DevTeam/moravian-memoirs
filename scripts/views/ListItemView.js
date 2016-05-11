@@ -146,6 +146,10 @@ module.exports = Backbone.View.extend({
 	render: function() {
 		var template = _.template($("#listItemTemplate").html());
 
+		this.model.set('hasDocument', _.find(this.model.get('documents'), function(document) {
+			return (document.doc_text && document.doc_text != '') || (document.docimages && document.docimages != '');
+		}) != undefined);
+
 		this.$el.html(template({
 			model: this.model,
 			jQuery: $

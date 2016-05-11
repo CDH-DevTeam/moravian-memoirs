@@ -1,6 +1,6 @@
 <script id="listItemTemplate" type="text/template">
 
-	<a class="item-title">
+	<a class="item-title<%= model.get('hasDocument') ? ' has-document' : '' %>">
 
 		<div class="title"><strong><%= model.get('surname') ? model.get('surname')+', ' : '' %><%= model.get('firstname') %></strong> <%= model.get('birth_year') %>-<%= model.get('death_year') %></div>
 		<div class="title-attribs">
@@ -71,7 +71,7 @@
 							<th></th>
 						</tr>
 						<% _.each(model.get('documents'), function(document, index) { %>
-							<tr class="table-item table-title table-info-<%= index %>" data-index="<%= index %>">
+							<tr class="table-item table-title table-info-<%= index %><%= document.doc_text || document.docimages ? ' has-document' : '' %>" data-index="<%= index %>">
 				
 								<td><a href="#"><%= document.surname %><%= document.surname && document.firstname ? ', ' : '' %><%= document.firstname %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 
