@@ -95,6 +95,31 @@ body {
 
 		.home & {
 			padding-top: 125px;
+
+			@media (max-width: 768px) {
+				padding-top: 45px;
+
+				h1 {
+					font-size: 1.8rem;
+				}
+
+				.site-description {
+					margin-bottom: 1rem;
+					
+					font-size: 1rem;
+				}
+
+				.map-button {
+					display: inline-block;
+
+					position: relative;
+
+					right: auto;
+					top: auto;
+
+					padding: 8px 20px;
+				}
+			}
 		}
 
 		.page-template-map-page & {
@@ -203,6 +228,10 @@ body {
 
 	.home & {
 		top: 270px;
+
+		@media (max-width: 768px) {
+			top: 220px;
+		}
 	}
 
 	.page-template-map-page & {
@@ -266,6 +295,10 @@ body {
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#ad000000',GradientType=0 ); /* IE6-9 */
 
 		z-index: 3000;
+
+		@media (max-width: 768px) {
+			top: 500px;
+		}
 
 		.container {
 			box-shadow: none;

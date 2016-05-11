@@ -145,7 +145,7 @@ module.exports = Backbone.View.extend({
 				this.polyLines.addTo(this.map);
 			}
 
-			this.polyLines.setLatLngs(this.collection.models.length == 1 ? [] : _.map(this.collection.models, function(model) {
+			this.polyLines.setLatLngs(this.collection.models.length == 0 ? [] : _.map(this.collection.models, function(model) {
 				return [
 					L.latLng(model.get('birthplace').lat, model.get('birthplace').lng),
 					L.latLng(model.get('deathplace').lat, model.get('deathplace').lng)
