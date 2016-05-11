@@ -82,6 +82,12 @@ function llportal_setup() {
 endif;
 add_action( 'after_setup_theme', 'llportal_setup' );
 
+
+function llportal_motioner_theme_add_editor_styles() {
+    add_editor_style( 'editor-style.css' );
+}
+add_action( 'admin_init', 'llportal_motioner_theme_add_editor_styles' );
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
