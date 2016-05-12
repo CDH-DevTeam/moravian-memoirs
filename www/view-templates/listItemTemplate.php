@@ -84,11 +84,11 @@
 								<td colspan="4" class="table-sub table-info-<%= index %>">
 									<p>
 
-									<% if (document.doc_text) { %>
-										<button class="button button-primary full-text-button u-pull-right" data-index="<%= index %>">View full text</button>
-									<% } %>
-
 									<strong><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %></strong> - <strong><%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></strong><br/>
+
+									<% if (document.doc_text) { %>
+										<br/><button class="button button-primary full-text-button" data-index="<%= index %>">View full text</button><br/>
+									<% } %>
 
 									<% if (document.birthplacename) { %>
 										<strong>Birth place:</strong> <%= document.birthplacename %><br/>
