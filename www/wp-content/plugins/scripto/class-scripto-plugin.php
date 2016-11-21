@@ -394,13 +394,25 @@ appear if nothing is entered. You may use HTML.</span></p>
 		ob_start();
 ?>
 <?php if ($attachments): ?>
-<h3>Transcribe</h3>
-<ol>
-	<?php foreach ( $attachments as $attachment ): ?>
-	<?php $params['scripto_doc_page_id'] = $attachment->ID; ?>
-	<li><a href="<?php echo site_url( '?' . http_build_query( $params ) ); ?>"><?php echo $attachment->post_title; ?></a></li>
-	<?php endforeach; ?>
-</ol>
+	<div class="post-transcriptions">
+		<h3>Transcribe</h3>
+		<div class="gallery">
+			<?php foreach ( $attachments as $attachment ): ?>
+
+				<?php $params['scripto_doc_page_id'] = $attachment->ID; ?>
+				<!--<li><a href="<?php echo site_url( '?' . http_build_query( $params ) ); ?>"><?php echo $attachment->post_title; ?></a></li>-->
+
+				<figure class="gallery-item">
+					<div class="gallery-icon portrait">
+						<a href="<?php echo site_url( '?' . http_build_query( $params ) ); ?>">
+							<img width="150" height="150" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" class="attachment-thumbnail size-thumbnail">
+						</a>
+					</div>
+				</figure>
+
+			<?php endforeach; ?>
+		</gallery>
+	</div>
 <?php endif; ?>
 <?php
 		$content .= ob_get_contents();

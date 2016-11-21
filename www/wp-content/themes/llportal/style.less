@@ -1489,6 +1489,31 @@ select.form-input-settings {
 			border-radius: 0;
 			box-shadow: none;
 		}
+
+		&.gallery-item {
+			float: left;
+			margin: 0 10px 10px 0;
+		}
+	}
+
+	.gallery {
+		margin-top: 20px;
+
+		.category-transcriptions & {
+			display: none;
+		}
+
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+
+	.post-transcriptions {
+		.gallery {
+			display: block;
+		}
 	}
 
 	ul {

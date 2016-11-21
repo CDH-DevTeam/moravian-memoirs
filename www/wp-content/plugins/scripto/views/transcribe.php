@@ -3,7 +3,7 @@
 <p><?php echo $this->get_navigation(); ?></p>
 
 <h2>Transcribe <cite><?php echo $doc->getPageName(); ?></cite></h2>
-<h3>in <cite><?php echo $doc->getTitle(); ?></cite></h3>
+<h3>in <a href="<?php echo get_permalink($doc->getId()); ?>"><cite><?php echo $doc->getTitle(); ?></cite></a></h3>
 
 <div class="transcription-container side-view">
 	<div class="image-wrapper"><?php echo $this->get_media_viewer( $_GET['scripto_doc_page_id'] ); ?></div>
