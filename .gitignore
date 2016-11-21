@@ -3,3 +3,5 @@ node_modules/
 wp-config.php
 www/wp-config.php
 www/api/config.php
+www/wp-content/uploads
+www/document_images

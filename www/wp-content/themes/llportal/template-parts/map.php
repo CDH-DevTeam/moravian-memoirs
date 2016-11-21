@@ -87,5 +87,3 @@
 	include get_home_path()."view-templates/mapPopupTemplate.php";
 
 ?>
-
-<script src="../js/app.min.js"></script>
