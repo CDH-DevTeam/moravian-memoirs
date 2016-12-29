@@ -1608,3 +1608,85 @@ select.form-input-settings {
 		}
 	}
 }
+
+.archive-list {
+	a.post {
+		display: block;
+
+		float: left;
+
+		width: 200px;
+
+		margin: -10px 25px 25px -10px;
+		padding: 10px;
+
+		text-decoration: none;
+		color: inherit;
+
+		border: 1px solid #fff;
+		border-radius: 3px;
+
+		.transition(all 200ms ease-in-out);
+
+		&:hover {
+			border-color: #dedede;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+			
+			background-color: #fefdfd;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+		}
+
+		.summary {
+			position:relative;
+
+			max-height: 120px;
+
+			margin-bottom: 5px;
+
+			font-size: 0.8rem;
+
+			overflow: hidden;
+
+			&:after {
+				content: " ";
+
+				display: block;
+
+				position: absolute;
+
+				left: 0;
+				right: 0;
+				bottom: 0;
+
+				height: 50%;
+
+				/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+100 */
+				background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+			}
+		}
+	}
+}
+
+.transcription-archive-thumbs {
+	padding: 5px 0 0 5px;
+
+	background: #f2f2f2;
+	
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+	img {
+		max-width: 40px;
+		max-height: 40px;
+
+		margin: 0 5px 5px 0;
+	}
+}

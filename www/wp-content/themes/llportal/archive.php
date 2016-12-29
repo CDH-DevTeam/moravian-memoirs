@@ -9,8 +9,9 @@
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+<div class="container">
+	<div class="content-area">
+		<main class="site-main twelve columns" role="main">
 
 		<?php
 		if ( have_posts() ) : ?>
@@ -21,6 +22,8 @@ get_header(); ?>
 					the_archive_description( '<div class="taxonomy-description">', '</div>' );
 				?>
 			</header><!-- .page-header -->
+
+			<div class="archive-list">
 
 			<?php
 			/* Start the Loop */
@@ -43,9 +46,12 @@ get_header(); ?>
 
 		endif; ?>
 
-		</main><!-- #main -->
+		</div>
+
+		</div><!-- #main -->
 	</div><!-- #primary -->
+</div>
 
 <?php
-get_sidebar();
+
 get_footer();

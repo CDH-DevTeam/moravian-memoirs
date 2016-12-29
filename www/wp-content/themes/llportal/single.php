@@ -13,7 +13,6 @@ get_header(); ?>
 	<div class="content-area row">
 		<main class="site-main twelve columns" role="main">
 
-
 		<?php
 		while ( have_posts() ) : the_post();
 

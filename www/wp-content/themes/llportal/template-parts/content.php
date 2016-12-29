@@ -9,32 +9,64 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php
-			if ( is_single() || is_home() ) {
-				the_title( '<h2 class="entry-title">', '</h2>' );
-			} else {
-				the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-			}
+<?php
+	$category = get_the_category();
 
+	if (is_archive() && get_object_vars($category[0])['slug'] == 'transcriptions') {
 		?>
-	</header><!-- .entry-header -->
-
-	<div class="entry-content">
+		<a href="<?php echo esc_url( get_permalink() ); ?>" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<?php
-			the_content( sprintf(
-				/* translators: %s: Name of current post. */
-				wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'llportal' ), array( 'span' => array( 'class' => array() ) ) ),
-				the_title( '<span class="screen-reader-text">"', '"</span>', false )
-			) );
+		the_title( '<h2 class="entry-title">', '</h2>' );
 
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'llportal' ),
-				'after'  => '</div>',
-			) );
-		?>
-	</div><!-- .entry-content -->
+		echo '<div class="summary">';
+		the_excerpt();
+		echo '</div>';
+
+		$postMedia = get_attached_media('image');
+
+		echo '<div class="transcription-archive-thumbs">';
+		foreach ($postMedia as $image) {
+			$imageId = get_object_vars($image)['ID'];
+			echo wp_get_attachment_image($imageId);
+		}
+		echo '</div>';
+		echo '</a>';
+	}
+	else {
+?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+		<header class="entry-header">
+			<?php
+				if ( is_single() || is_home() ) {
+					the_title( '<h2 class="entry-title">', '</h2>' );
+				} else {
+					the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+				}
+
+				$posttags = get_the_tags();
+
+				if ($posttags) {
+					
+				}
+
+			?>
+		</header><!-- .entry-header -->
+
+		<div class="entry-content">
+			<?php
+				the_content( sprintf(
+					/* translators: %s: Name of current post. */
+					wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'llportal' ), array( 'span' => array( 'class' => array() ) ) ),
+					the_title( '<span class="screen-reader-text">"', '"</span>', false )
+				) );
+
+				wp_link_pages( array(
+					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'llportal' ),
+					'after'  => '</div>',
+				) );
+			?>
+		</div><!-- .entry-content -->
 
 	<?php
 	/*
@@ -45,4 +77,7 @@
 	<?php
 	*/
 	?>
-</article><!-- #post-## -->
+	</article><!-- #post-## -->
+<?php
+}
+?>

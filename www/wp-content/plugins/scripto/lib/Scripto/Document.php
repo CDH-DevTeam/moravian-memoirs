@@ -133,7 +133,7 @@ class Scripto_Document
         if (!$this->_adapter->documentPageExists($this->_id, $pageId)) {
             throw new Scripto_Exception("The specified page does not exist: $pageId");
         }
-        
+
         // Mint the page title used by MediaWiki.
         $baseTitle = self::encodeBaseTitle($this->_id, $pageId);
         
