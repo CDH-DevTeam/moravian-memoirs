@@ -78,6 +78,15 @@ function llportal_setup() {
 	) ) );
 
 	add_filter('show_admin_bar', '__return_false');
+
+	add_filter( 'get_the_archive_title', function ($title) {
+
+		if ( is_category() ) {
+			$title = single_cat_title( '', false );
+		}
+		return $title;
+
+	});
 }
 endif;
 add_action( 'after_setup_theme', 'llportal_setup' );

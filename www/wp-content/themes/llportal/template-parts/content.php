@@ -24,10 +24,12 @@
 
 		$postMedia = get_attached_media('image');
 
-		echo '<div class="transcription-archive-thumbs">';
+		echo '<div class="transcription-archive-thumbs" data-id="'.get_the_ID().'">';
 		foreach ($postMedia as $image) {
 			$imageId = get_object_vars($image)['ID'];
+			echo '<span class="thumb" data-id="'.$imageId.'">';
 			echo wp_get_attachment_image($imageId);
+			echo '</span>';
 		}
 		echo '</div>';
 		echo '</a>';

@@ -16,4 +16,15 @@ $(function() {
 			el: $('#scripto')
 		});
 	}
+
+	if ($('.transcription-archive-thumbs').length > 0) {
+		var _ = require('underscore');
+		var TranscriptionThumbsView = require('./views/TranscriptionThumbsView');
+
+		_.each($('.transcription-archive-thumbs'), function(archiveThumbs) {
+			new TranscriptionThumbsView({
+				el: $(archiveThumbs)
+			});
+		});
+	}
 });
