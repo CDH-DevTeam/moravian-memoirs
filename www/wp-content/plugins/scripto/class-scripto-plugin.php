@@ -404,7 +404,7 @@ appear if nothing is entered. You may use HTML.</span></p>
 
 				<figure class="gallery-item">
 					<div class="gallery-icon portrait">
-						<a href="<?php echo site_url( '?' . http_build_query( $params ) ); ?>">
+						<a data-post="<?php echo $params['scripto_doc_id']; ?>" data-image="<?php echo $params['scripto_doc_page_id']; ?>" href="<?php echo site_url( '?' . http_build_query( $params ) ); ?>">
 							<img width="150" height="150" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" class="attachment-thumbnail size-thumbnail">
 						</a>
 					</div>

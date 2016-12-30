@@ -1513,6 +1513,12 @@ select.form-input-settings {
 	.post-transcriptions {
 		.gallery {
 			display: block;
+
+			.gallery-item {
+				a {
+					position: relative;
+				}
+			}
 		}
 	}
 
@@ -1686,24 +1692,6 @@ select.form-input-settings {
 	.thumb {
 		position: relative;
 
-		.indicator {
-			position: absolute;
-	
-			left: -1px;
-			right: 4px;
-			bottom: 9px;
-	
-			height: 5px;
-	
-			border-radius: 3px;
-			border: 1px solid;
-
-			&.green {
-				background-color: #42ff6d;
-				
-				border-color: #539f64;
-			}
-		}
 
 		img {
 			max-width: 40px;
@@ -1713,5 +1701,24 @@ select.form-input-settings {
 
 			box-shadow: 0 0px 1px rgba(0, 0, 0, 0.6);
 		}
+	}
+}
+
+.indicator {
+	position: absolute;
+
+	left: -1px;
+	right: 4px;
+	bottom: 9px;
+
+	height: 5px;
+
+	border-radius: 3px;
+	border: 1px solid;
+
+	&.green {
+		background-color: #42ff6d;
+		
+		border-color: #539f64;
 	}
 }

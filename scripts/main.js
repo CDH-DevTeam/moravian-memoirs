@@ -27,4 +27,15 @@ $(function() {
 			});
 		});
 	}
+
+	if ($('.post-transcriptions').length > 0) {
+		var _ = require('underscore');
+		var TranscriptionThumbsView = require('./views/TranscriptionThumbsView');
+
+		_.each($('.post-transcriptions'), function(archiveThumbs) {
+			new TranscriptionThumbsView({
+				el: $(archiveThumbs)
+			});
+		});
+	}
 });
