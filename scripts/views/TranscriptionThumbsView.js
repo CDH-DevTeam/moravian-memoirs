@@ -3,8 +3,6 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 module.exports = Backbone.View.extend({
-//	mediaWikiUrl: 'http://localhost/mediawiki_test/api.php',
-	mediaWikiUrl: 'http://moravianlives.org/transcriptions/api.php',
 
 	initialize: function() {
 		this.isSinglePage = this.$el.hasClass('post-transcriptions');
@@ -19,7 +17,7 @@ module.exports = Backbone.View.extend({
 			var pageId = this.isSinglePage ? $(thumb).data('post') : this.pageId;
 
 			var model = new Backbone.Model();
-			model.url = this.mediaWikiUrl;
+			model.url = window.mediaWikiUrl;
 			model.on('change', _.bind(function() {
 				if (model.get('query').pages['-1']) {
 					console.log(this.encodeBaseTitle(imageId, pageId)+' has no revisions');
