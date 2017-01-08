@@ -19,13 +19,8 @@ module.exports = Backbone.View.extend({
 			var model = new Backbone.Model();
 			model.url = window.mediaWikiUrl;
 			model.on('change', _.bind(function() {
-				if (model.get('query').pages['-1']) {
-					console.log(this.encodeBaseTitle(imageId, pageId)+' has no revisions');
-				}
-				else {
-					console.log(this.encodeBaseTitle(imageId, pageId)+' has revisions');
-
-					$(thumb).append('<div class="indicator green"></div>');
+				if (!model.get('query').pages['-1']) {
+					$(thumb).append('<div class="transcription-indicator green"></div>');
 				}
 			}, this));
 

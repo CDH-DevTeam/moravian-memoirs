@@ -147,7 +147,7 @@ module.exports = Backbone.View.extend({
 		var template = _.template($("#listItemTemplate").html());
 
 		this.model.set('hasDocument', _.find(this.model.get('documents'), function(document) {
-			return (document.doc_text && document.doc_text != '') || (document.docimages && document.docimages != '');
+			return document.transcriptions && transcriptions.transcriptions.length > 0;
 		}) != undefined);
 
 		this.$el.html(template({
