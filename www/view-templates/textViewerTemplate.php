@@ -6,7 +6,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="twelve columns">
-					<h2><%= document.surname %>, <%= document.firstname %></h2>
+					<h2><%= document.surname ? document.surname+', ' : document.surname_literal ? document.surname_literal+', ' : '' %><%= document.firstname %></h2>
 
 					<p class="u-pull-right">Reference: <%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %></p>
 
@@ -15,14 +15,15 @@
 			</div>
 			<div class="row">
 				<div class="nine columns">
-					<%= document.doc_text %>
+					<p><a href="<%= document.transcriptions.wp_url %>" target="_blank">Link to transcription page</a></p>
+					<% _.each(document.transcriptions.transcriptions, function(transcription) { %>
+						<p><%= transcription.transcription %></p>
+					<% }) %>
 				</div>
 				<div class="three columns images">
-					<% if (images != undefined) { %>
-						<% _.each(images, function(image) { %>
-							<a target="_blank" href="/document_images/<%= image %>"><img src="/document_images/thumbs/<%= image %>"/></a>
-						<% }) %>
-					<% } %>
+					<% _.each(document.transcriptions.transcriptions, function(transcription) { %>
+						<a target="_blank" href="<%= transcription.url %>"><img src="<%= transcription.medium %>"/></a>
+					<% }) %>
 				</div>
 			</div>
 		</div>

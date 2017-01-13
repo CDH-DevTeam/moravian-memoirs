@@ -71,7 +71,7 @@
 							<th></th>
 						</tr>
 						<% _.each(model.get('documents'), function(document, index) { %>
-							<tr class="table-item table-title table-info-<%= index %><%= document.doc_text || document.docimages ? ' has-document' : '' %>" data-index="<%= index %>">
+							<tr class="table-item table-title table-info-<%= index %><%= document.transcriptions && document.transcriptions.transcriptions ? ' has-document' : '' %>" data-index="<%= index %>">
 				
 								<td><a href="#"><%= document.surname %><%= document.surname && document.firstname ? ', ' : '' %><%= document.firstname %><%= document.comment || document.fulltext ? '</a>' : '' %></td>
 
@@ -86,7 +86,7 @@
 
 									<strong><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %></strong> - <strong><%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></strong><br/>
 
-									<% if (document.doc_text) { %>
+									<% if (document.transcriptions && document.transcriptions.transcriptions) { %>
 										<br/><button class="button button-primary full-text-button" data-index="<%= index %>">View full text</button><br/>
 									<% } %>
 
