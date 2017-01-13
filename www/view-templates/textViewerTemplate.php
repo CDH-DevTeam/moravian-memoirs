@@ -8,14 +8,14 @@
 				<div class="twelve columns">
 					<h2><%= document.surname ? document.surname+', ' : document.surname_literal ? document.surname_literal+', ' : '' %><%= document.firstname %></h2>
 
-					<p class="u-pull-right">Reference: <%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %></p>
+					<p class="u-pull-right"><strong>Reference</strong>: <%= document.ll_id  %><%= document.reference ? ', '+document.reference : ''  %></p>
 
 					<h3><%= document.birth_day ? document.birth_day+'.' : '' %><%= document.birth_month ? document.birth_month+'.' : '' %><%= document.birth_year ? document.birth_year : '' %> - <%= document.death_day ? document.death_day+'.' : '' %><%= document.death_month ? document.death_month+'.' : '' %><%= document.death_year ? document.death_year : '' %></h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="nine columns">
-					<p><a href="<%= document.transcriptions.wp_url %>" target="_blank">Link to transcription page</a></p>
+					<p><a href="<%= document.transcriptions.wp_url %>">Link to transcription page</a></p>
 					<% _.each(document.transcriptions.transcriptions, function(transcription) { %>
 						<p><%= transcription.transcription %></p>
 					<% }) %>

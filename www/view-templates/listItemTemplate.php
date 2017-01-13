@@ -111,8 +111,10 @@
 									<% } %>
 									</p>
 
-									<% if (document.doc_text) { %>
-										<%= jQuery.truncate(document.doc_text, {length: 600 }) %>
+									<% if (document.transcriptions && document.transcriptions.transcriptions) { %>
+										<p><%= jQuery.truncate(_.map(document.transcriptions.transcriptions, function(transcription) {
+											return transcription.transcription;
+											}).join('<br/>'), {length: 600 }) %></p>
 										<button class="button full-text-button" data-index="<%= index %>">...</button>
 									<% } %>
 								</td>
