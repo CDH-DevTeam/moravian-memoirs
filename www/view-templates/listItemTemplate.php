@@ -112,10 +112,17 @@
 									</p>
 
 									<% if (document.transcriptions && document.transcriptions.transcriptions) { %>
-										<p><%= jQuery.truncate(_.map(document.transcriptions.transcriptions, function(transcription) {
-											return transcription.transcription;
-											}).join('<br/>'), {length: 600 }) %></p>
-										<button class="button full-text-button" data-index="<%= index %>">...</button>
+										<% if (document.transcriptions.transcriptions[0].transcription) { %>
+											<p><%= jQuery.truncate(_.map(document.transcriptions.transcriptions, function(transcription) {
+												return transcription.transcription;
+												}).join('<br/>'), {length: 600 }) %></p>
+											<button class="button full-text-button" data-index="<%= index %>">...</button>
+										<% } else { %>
+											<hr/><br/>
+											<h3 class="text-center">No transcribed text</h3>
+											<p class="text-center">This document contains scanned images but does not include any transcribed text.<p>
+											<p class="text-center"><a class="button" href="<%= document.transcriptions.wp_url %>">Click here to contribute by transcribing.</a></p>
+										<% } %>
 									<% } %>
 								</td>
 							</td>
