@@ -1,6 +1,6 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
 <style type="text/css">
 	#scripto-diff tr {border: none !important;}

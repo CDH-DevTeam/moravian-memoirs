@@ -1,12 +1,14 @@
 <div id="scripto" class="scripto scripto-transcription">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
-<h2>Transcribe <cite><?php echo $doc->getPageName(); ?></cite></h2>
-<h3>in <a href="<?php echo get_permalink($doc->getId()); ?>"><cite><?php echo $doc->getTitle(); ?></cite></a></h3>
+<h3>Transcribe <cite><?php echo $doc->getPageName(); ?></cite></h3>
+<h4>in <a href="<?php echo get_permalink($doc->getId()); ?>"><cite><?php echo $doc->getTitle(); ?></cite></a></h4>
 
 <div class="transcription-container side-view">
-	<div class="image-wrapper"><?php echo $this->get_media_viewer( $_GET['scripto_doc_page_id'] ); ?></div>
+	<div class="image-wrapper">
+		<?php echo $this->get_media_viewer( $_GET['scripto_doc_page_id'] ); ?>
+	</div>
 
 	<div class="text-input-wrapper">
 		<?php if ( $doc->canEditTranscriptionPage() ): ?>

@@ -1,8 +1,6 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
-
-<h2>Welcome to Scripto!</h2>
+<?php echo $this->get_navigation(); ?>
 
 <?php if ($home_page_text): ?>
 <?php echo $home_page_text; ?>

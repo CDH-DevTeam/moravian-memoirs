@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Intro Page
+* Template Name: Transcriptions page
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -10,7 +10,7 @@
 get_header(); ?>
 
 <div class="container">
-	<div class="content-area row">
+	<div class="content-area">
 		<main class="site-main twelve columns" role="main">
 
 			<?php
@@ -22,20 +22,24 @@ get_header(); ?>
 			?>
 
 		</main>
-	</div>
 
-	<div class="row">
-		<div class="twelve columns">
-			<?php
-				get_sidebar();
-			?>
-		</div>
+		<?php
+		//	get_sidebar();
+		?>
+		
 	</div>
-
 </div>
 
 <?php
 
+if (!function_exists( 'get_home_path' )) {
+	require_once( ABSPATH.'wp-admin/includes/file.php');
+}
+
+include get_home_path()."view-templates/transcriptionsSearchUiTemplate.php";
+include get_home_path()."view-templates/transcriptionSearchListTemplate.php";
+
 get_footer();
+
 
 ?>

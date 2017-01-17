@@ -91,6 +91,10 @@ function llportal_setup() {
 endif;
 add_action( 'after_setup_theme', 'llportal_setup' );
 
+add_filter( 'query_vars', function( $query_vars ) {
+    $query_vars[] = 'post_parent';
+    return $query_vars;
+});
 
 function llportal_motioner_theme_add_editor_styles() {
     add_editor_style( 'editor-style.css' );
@@ -125,6 +129,33 @@ function llportal_widgets_init() {
 		'after_title'   => '</h3>',
 	) );
 	register_sidebar( array(
+		'name'          => esc_html__( 'Transcriptions tab 1', 'llportal' ),
+		'id'            => 'transcriptions-tab-1',
+		'description'   => '',
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+	register_sidebar( array(
+		'name'          => esc_html__( 'Transcriptions tab 2', 'llportal' ),
+		'id'            => 'transcriptions-tab-2',
+		'description'   => '',
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+	register_sidebar( array(
+		'name'          => esc_html__( 'Transcriptions tab 3', 'llportal' ),
+		'id'            => 'transcriptions-tab-3',
+		'description'   => '',
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+	register_sidebar( array(
 		'name'          => esc_html__( 'Footer', 'llportal' ),
 		'id'            => 'footer',
 		'description'   => '',
@@ -133,6 +164,7 @@ function llportal_widgets_init() {
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
 	) );
+
 }
 add_action( 'widgets_init', 'llportal_widgets_init' );
 

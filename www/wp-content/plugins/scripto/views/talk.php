@@ -1,6 +1,6 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
 <h2>Discuss <cite><?php echo $doc->getPageName(); ?></cite></h2>
 <h3>in <cite><?php echo $doc->getTitle(); ?></cite></h3>

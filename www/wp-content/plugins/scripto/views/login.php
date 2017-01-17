@@ -1,6 +1,6 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
 <p>You may log in to access your account and enable certain Scripto features. 
 Login may not be required by the administrator.</p>

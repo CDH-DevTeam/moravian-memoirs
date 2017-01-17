@@ -54,6 +54,10 @@ body {
 
 // Website
 
+hr.narrow-top {
+	margin: 0.5rem 0 2rem 0;
+}
+
 .text-center {
 	text-align: center,
 }
@@ -1734,5 +1738,33 @@ select.form-input-settings {
 		left: -1px;
 		right: -1px;
 		bottom: -1px;
+	}
+}
+.menu-bar {
+	a {
+		display: inline-block;
+
+		margin: 0 20px 0 0;
+
+		font-weight: bold;
+		color: #474747;
+		text-decoration: none;
+
+		border-bottom: 2px solid #fff;
+
+		box-sizing: border-box;
+
+		.transition(all 200ms ease-in-out);
+
+		&.selected, &:hover {
+			color: #333;
+			border-bottom: 2px solid #f97500;
+		}
+	}
+
+	.static {
+		display: inline-block;
+
+		margin: 0 20px 0 0;
 	}
 }

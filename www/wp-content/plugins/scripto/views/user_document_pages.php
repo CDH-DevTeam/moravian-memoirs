@@ -1,8 +1,8 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
-<h2>Your Contributions</h2>
+<h3>Your Contributions</h3>
 
 <?php if ( $user_document_pages ): ?>
 <table>

@@ -1,8 +1,8 @@
 <div id="scripto">
 
-<p><?php echo $this->get_navigation(); ?></p>
+<?php echo $this->get_navigation(); ?>
 
-<h2>Recent Changes to Scripto</h2>
+<h3>Recent Changes to Scripto</h3>
 
 <?php if ( $recent_changes ): ?>
 <table>

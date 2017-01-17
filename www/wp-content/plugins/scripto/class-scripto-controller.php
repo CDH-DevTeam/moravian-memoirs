@@ -577,28 +577,23 @@ class Scripto_Controller
 	 */
 	public function get_navigation() {
 		$navigation = '';
-		if ( in_array( $_GET['scripto_action'], array('index', 'user_document_pages') ) ) {
-			$navigation .= 'home';
-		} else {
-			$navigation .= '<a href="' . $this->scripto_url( 'index' ) . '">home</a>';
-		}
-		$navigation .= ' | ';
-		if ( 'recent_changes' == $_GET['scripto_action'] ) {
-			$navigation .= 'recent changes';
-		} else {
-			$navigation .= '<a href="' . $this->scripto_url( 'recent_changes' ) . '">recent changes</a>';
-		}
-		$navigation .= ' | ';
+
+		$navigation .= '<a href="'.home_url().Scripto_Plugin::get_setting('home_page_url').'">Home</a>';
+
+		$navigation .= '<a class="'.(in_array( $_GET['scripto_action'], array('index', 'user_document_pages') ) ? 'selected' : '').'" href="' . $this->scripto_url( 'index' ) . '">My transcriptions</a>';
+
+		$navigation .= '<a class="'.( 'recent_changes' == $_GET['scripto_action'] ? 'selected' : '').'" href="' . $this->scripto_url( 'recent_changes' ) . '">Recent changes</a>';
+
 		if ( $this->_scripto->isLoggedIn() ) {
-			$navigation .= 'logged in as ' . $this->_scripto->getUserName() . ' (<a href="' . $this->scripto_url( 'logout' ) . '">logout</a>)';
+			$navigation .= '<div class="static">logged in as ' . $this->_scripto->getUserName() . '</div><a href="' . $this->scripto_url( 'logout' ) . '">Logout</a>';
 		} else {
 			if ( 'login' == $_GET['scripto_action'] ) {
 				$navigation .= 'login';
 			} else {
-				$navigation .= '<a href="' . $this->scripto_url( 'login' ) . '">login</a>';
+				$navigation .= '<a href="' . $this->scripto_url( 'login' ) . '">Login</a>';
 			}
 		}
-		return $navigation;
+		return '<div class="menu-bar">'.$navigation.'</div><hr class="narrow-top"/>';
 	}
 	
 	/**

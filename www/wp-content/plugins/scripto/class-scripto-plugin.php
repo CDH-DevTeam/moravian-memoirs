@@ -101,6 +101,12 @@ class Scripto_Plugin
 			'Scripto_Plugin::settings_field_home_page_text', 
 			'scripto_settings_sections_page', 
 			'scripto_settings_section_configuration' );
+			
+		add_settings_field( 'scripto_home_page_url', 
+			'Home Page Url', 
+			'Scripto_Plugin::settings_field_home_page_url', 
+			'scripto_settings_sections_page', 
+			'scripto_settings_section_configuration' );
 	}
 	
 	/**
@@ -287,6 +293,13 @@ appear if nothing is entered. You may use HTML.</span></p>
 <?php
 	}
 	
+	public static function settings_field_home_page_url() {
+?>
+<input id="scripto_home_page_url" name="scripto_settings[home_page_url]" size="60" type="text" value="<?php echo self::get_setting('home_page_url') ?>"/>
+<p><span class="description">URL to transcriptions home page.</span></p>
+<?php
+	}
+	
 	/**
 	 * Validate the setting page options.
 	 * 
@@ -299,6 +312,7 @@ appear if nothing is entered. You may use HTML.</span></p>
 		$valid_options['zend_framework_path'] = trim( $options['zend_framework_path'] );
 		$valid_options['mediawiki_api_url'] = trim( $options['mediawiki_api_url'] );
 		$valid_options['home_page_text'] = trim( $options['home_page_text'] );
+		$valid_options['home_page_url'] = trim( $options['home_page_url'] );
 		
 		// Validate path to Zend Framework.
 		if ( ! is_dir( $options['zend_framework_path'] ) ) {
