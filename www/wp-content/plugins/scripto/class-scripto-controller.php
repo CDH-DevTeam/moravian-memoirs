@@ -587,11 +587,7 @@ class Scripto_Controller
 		if ( $this->_scripto->isLoggedIn() ) {
 			$navigation .= '<div class="static">logged in as ' . $this->_scripto->getUserName() . '</div><a href="' . $this->scripto_url( 'logout' ) . '">Logout</a>';
 		} else {
-			if ( 'login' == $_GET['scripto_action'] ) {
-				$navigation .= 'login';
-			} else {
-				$navigation .= '<a href="' . $this->scripto_url( 'login' ) . '">Login</a>';
-			}
+			$navigation .= '<a class="'.( 'login' == $_GET['scripto_action'] ? 'selected' : '').'" href="' . $this->scripto_url( 'login' ) . '">Login</a>';
 		}
 		return '<div class="menu-bar">'.$navigation.'</div><hr class="narrow-top"/>';
 	}

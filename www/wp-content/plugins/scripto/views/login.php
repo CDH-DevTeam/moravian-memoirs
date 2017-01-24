@@ -9,10 +9,17 @@ Login may not be required by the administrator.</p>
 <p><?php echo $this->get_message(); ?></p>
 <?php endif; ?>
 
-<form action="" method="post">
-	<p>Username <input type="input" name="scripto_username" /></p>
-	<p>Password <input type="password" name="scripto_password" /></p>
-	<p><input type="submit" name="scripto_submit_login" value="Login" /></p>
-</form>
+	<div class="row">
+		<div class="six columns">
+			<form action="" method="post">
+				<p>
+					<label>Username</label><input type="text" class="u-full-width" name="scripto_username" />
+					<label>Password</label><input type="password" class="u-full-width" name="scripto_password" /><br/>
+					<input type="submit" class="button-primary" name="scripto_submit_login" value="Login" />
+					<a href="<?php echo Scripto_Plugin::get_setting('create_user_url'); ?>" class="button">Click here to create an account</a>
+				</p>
+			</form>
+		</div>
+	</div>
 
 </div>

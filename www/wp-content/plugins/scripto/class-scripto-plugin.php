@@ -107,6 +107,12 @@ class Scripto_Plugin
 			'Scripto_Plugin::settings_field_home_page_url', 
 			'scripto_settings_sections_page', 
 			'scripto_settings_section_configuration' );
+
+		add_settings_field( 'scripto_create_user_url', 
+			'Create User Url', 
+			'Scripto_Plugin::settings_field_create_user_url', 
+			'scripto_settings_sections_page', 
+			'scripto_settings_section_configuration' );
 	}
 	
 	/**
@@ -300,6 +306,13 @@ appear if nothing is entered. You may use HTML.</span></p>
 <?php
 	}
 	
+	public static function settings_field_create_user_url() {
+?>
+<input id="scripto_create_user_url" name="scripto_settings[create_user_url]" size="60" type="text" value="<?php echo self::get_setting('create_user_url') ?>"/>
+<p><span class="description">URL to create user in mediawiki.</span></p>
+<?php
+	}
+	
 	/**
 	 * Validate the setting page options.
 	 * 
@@ -313,6 +326,7 @@ appear if nothing is entered. You may use HTML.</span></p>
 		$valid_options['mediawiki_api_url'] = trim( $options['mediawiki_api_url'] );
 		$valid_options['home_page_text'] = trim( $options['home_page_text'] );
 		$valid_options['home_page_url'] = trim( $options['home_page_url'] );
+		$valid_options['create_user_url'] = trim( $options['create_user_url'] );
 		
 		// Validate path to Zend Framework.
 		if ( ! is_dir( $options['zend_framework_path'] ) ) {

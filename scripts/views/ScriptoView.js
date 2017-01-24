@@ -4,11 +4,79 @@ var $ = require('jquery');
 
 var panZoom = require('../lib/jquery.panzoom.min');
 
+//var jsPanZoom = require('../lib/jquery.jspanzoom');
 //var zoom = require('../lib/e-smart-zoom-jquery');
 
 module.exports = Backbone.View.extend({
+	germanChars: [
+		'Ä',
+		'ä',
+		'Ö',
+		'ö',
+		'Ü',
+		'ü',
+		'ß'
+	],
+
+	events: {
+		'click .chars-links-container a': 'charsLinkClick',
+		'click .view-buttons button': 'viewButtonClick'
+	},
+
+	charsLinkClick: function(event) {
+		event.preventDefault();
+
+		function setSelectionRange(input, selectionStart, selectionEnd) {
+		  if (input.setSelectionRange) {
+		    input.focus();
+		    input.setSelectionRange(selectionStart, selectionEnd);
+		  }
+		  else if (input.createTextRange) {
+		    var range = input.createTextRange();
+		    range.collapse(true);
+		    range.moveEnd('character', selectionEnd);
+		    range.moveStart('character', selectionStart);
+		    range.select();
+		  }
+		}
+
+		function setCaretToPos (input, pos) {
+		  setSelectionRange(input, pos, pos);
+		}
+
+		var scrollPos = this.textArea.scrollTop();
+
+		var cursorPos = this.textArea.prop('selectionStart');
+		var v = this.textArea.val();
+		var textBefore = v.substring(0,  cursorPos);
+		var textAfter  = v.substring(cursorPos, v.length);
+
+		this.textArea.val(textBefore + $(event.currentTarget).data('char') + textAfter);
+
+		setCaretToPos(this.textArea[0], cursorPos+1);
+
+		this.textArea.blur();
+		this.textArea.focus();
+	},
+
+	viewButtonClick: function(event) {
+		event.preventDefault();
+
+		console.log(this.$el)
+
+		if ($(event.currentTarget).data('action') == 'side-view') {
+			this.$el.addClass('side-view');
+		}
+		if ($(event.currentTarget).data('action') == 'vertical-view') {
+			this.$el.removeClass('side-view');
+		}
+		if ($(event.currentTarget).data('action') == 'fullscreen') {
+			this.$el.toggleClass('fullscreen-view');
+		}
+	},
+
 	initialize: function() {
-		console.log('ScriptoView: initialize');
+		this.textArea = this.$el.find('textarea[name="scripto_transcription"]');
 
 		this.$el.find('.image-viewer .image-container').panzoom({
 			panOnlyWhenZoomed: false,
@@ -27,10 +95,11 @@ module.exports = Backbone.View.extend({
 				focal: e
 			});
 		}, this));
-/*
-		this.$el.find('.image-viewer .image-container').smartZoom({
-			containerClass: 'zoomableContainer'
+
+		var charsHtml = _.map(this.germanChars, function(char) {
+			return '<a href="#" data-char="'+char+'">'+char+'</a>';
 		});
-*/
+
+		this.$el.find('.chars-links-container').html(charsHtml.join(' '));
 	}
 });
