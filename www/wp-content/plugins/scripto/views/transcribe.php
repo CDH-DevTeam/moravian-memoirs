@@ -31,7 +31,7 @@
 		<div class="text-input-wrapper">
 			<?php if ( $doc->canEditTranscriptionPage() ): ?>
 				<form action="" method="post">
-					<textarea name="scripto_transcription" cols="45" rows="12"><?php echo $doc->getTranscriptionPageWikitext(); ?></textarea>
+					<textarea name="scripto_transcripton" cols="45" rows="12"><?php echo $doc->getTranscriptionPageWikitext(); ?></textarea>
 					<div class="transcription-tools">
 						<div class="chars-links-container"></div>
 						<input type="submit" name="scripto_submit_transcription" value="Save transcription" class="button button-primary" />
