@@ -164,6 +164,15 @@ function llportal_widgets_init() {
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
 	) );
+	register_sidebar( array(
+		'name'          => esc_html__( 'Under archive page title', 'llportal' ),
+		'id'            => 'under-title-sidebar',
+		'description'   => '',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
 
 }
 add_action( 'widgets_init', 'llportal_widgets_init' );

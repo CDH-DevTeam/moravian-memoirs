@@ -55,6 +55,8 @@
 			?>
 		</header><!-- .entry-header -->
 
+		<?php dynamic_sidebar( 'under-title-sidebar' ); ?>
+
 		<div class="entry-content">
 			<?php
 				the_content( sprintf(
