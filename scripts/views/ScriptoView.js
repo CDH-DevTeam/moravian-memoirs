@@ -76,7 +76,7 @@ module.exports = Backbone.View.extend({
 	},
 
 	initialize: function() {
-		this.textArea = this.$el.find('textarea[name="scripto_transcription"]');
+		this.textArea = this.$el.find('textarea[name="scripto_transcripton"]');
 
 		this.$el.find('.image-viewer .image-container').panzoom({
 			panOnlyWhenZoomed: false,
