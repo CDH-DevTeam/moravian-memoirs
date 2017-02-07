@@ -10,6 +10,7 @@ module.exports = Backbone.View.extend({
 
 		this.model = new Backbone.Model();
 		this.model.url = window.apiUrl+'transcriptions/count';
+		console.log(this.model.url);
 		this.model.on('change', _.bind(function() {
 			console.log(this.model);
 
