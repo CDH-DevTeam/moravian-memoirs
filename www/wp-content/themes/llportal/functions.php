@@ -96,6 +96,64 @@ add_filter( 'query_vars', function( $query_vars ) {
     return $query_vars;
 });
 
+function create_taxonomies() {
+    register_taxonomy('memoir-countries', array('memoirs'), array(
+        'labels' => array(
+            'name' => 'Memoirs Countries'
+        ),
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'memoirs/country'),
+	    'show_in_rest' => true
+    ));
+
+    register_taxonomy('memoir-language', array('memoirs'), array(
+    	'hierarchical' => false,
+        'labels' => array(
+            'name' => 'Memoirs Languages'
+        ),
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'rewrite' => array('slug' => 'memoirs/language'),
+	    'show_in_rest' => true
+    ));
+
+    register_taxonomy('memoir-archive', array('memoirs'), array(
+    	'hierarchical' => false,
+        'labels' => array(
+            'name' => 'Memoirs Archive'
+        ),
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var' => true,
+        'rewrite' => array('slug' => 'memoirs/archive'),
+	    'show_in_rest' => true
+    ));
+}
+add_action('init', 'create_taxonomies');
+
+function create_post_type() {
+  register_post_type( 'memoirs',
+    array(
+      'labels' => array(
+        'name' => __( 'Memoirs' ),
+        'singular_name' => __( 'Memoir' )
+      ),
+      'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'excerpt'),
+      'taxonomies' => array('post_tag'),
+      'public' => true,
+      'has_archive' => true,
+      'show_in_rest' => true
+    )
+  );
+}
+add_action( 'init', 'create_post_type' );
+
+
 function llportal_motioner_theme_add_editor_styles() {
     add_editor_style( 'editor-style.css' );
 }

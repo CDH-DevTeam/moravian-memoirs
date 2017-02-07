@@ -8,8 +8,6 @@ module.exports = Backbone.View.extend({
 		this.isSinglePage = this.$el.hasClass('post-transcriptions');
 		this.thumbsEls = this.isSinglePage ? this.$el.find('a') : this.$el.find('.thumb');
 
-		console.log(this.thumbsEls);
-
 		this.pageId = this.$el.data('id');
 
 		_.each(this.thumbsEls, _.bind(function(thumb) {

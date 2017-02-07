@@ -16,7 +16,7 @@ Login may not be required by the administrator.</p>
 					<label>Username</label><input type="text" class="u-full-width" name="scripto_username" />
 					<label>Password</label><input type="password" class="u-full-width" name="scripto_password" /><br/>
 					<input type="submit" class="button-primary" name="scripto_submit_login" value="Login" />
-					<a href="<?php echo Scripto_Plugin::get_setting('create_user_url'); ?>" class="button">Click here to create an account</a>
+					<a onclick="window.open('<?php echo Scripto_Plugin::get_setting('create_user_url'); ?>', '', 'width=570,height=614')" class="button">Click here to create an account</a>
 				</p>
 			</form>
 		</div>

@@ -26,8 +26,8 @@ get_header(); ?>
 		<div class="twelve columns tabs-control">
 			<ul class="tabs">
 
-				<li><a data-tab="tab1">Where to start?</a></li>
-				<li><a data-tab="tab2">Discover documents</a></li>
+				<li><a data-tab="tab1">Discover documents</a></li>
+				<li><a data-tab="tab2">Where to start?</a></li>
 				<li><a data-tab="tab3">Documents map</a></li>
 
 			</ul>

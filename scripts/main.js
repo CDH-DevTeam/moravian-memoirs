@@ -58,5 +58,16 @@ $(function() {
 				});
 			});
 		}
+
+		if ($('.transcription-status').length > 0) {
+			var _ = require('underscore');
+			var TranscriptionCountView = require('./views/TranscriptionCountView');
+
+			_.each($('.transcription-status'), function(transcriptionsCountContainer) {
+				new TranscriptionCountView({
+					el: $(transcriptionsCountContainer)
+				});
+			});
+		}
 	}
 });

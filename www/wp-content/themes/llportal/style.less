@@ -1507,7 +1507,7 @@ select.form-input-settings {
 	.gallery {
 		margin-top: 20px;
 
-		.category-transcriptions & {
+		.category-transcriptions &, article.memoirs & {
 			display: none;
 		}
 
@@ -1520,7 +1520,7 @@ select.form-input-settings {
 
 	.post-transcriptions {
 		.gallery {
-			display: block;
+			display: block !important;
 
 			.gallery-item {
 				a {
@@ -1794,7 +1794,9 @@ select.form-input-settings {
 }
 
 .archive-list {
-	a.post {
+	min-height: 150px;
+
+	a.post, a.memoirs {
 		display: block;
 
 		float: left;
@@ -1856,6 +1858,14 @@ select.form-input-settings {
 			}
 		}
 	}
+
+	.loading {
+		margin: 30px 0;
+
+		font-size: 1.6rem;
+		text-align: center;
+		color: #999;
+	}
 }
 
 .transcription-archive-thumbs {
@@ -1885,13 +1895,12 @@ select.form-input-settings {
 .transcription-indicator {
 	position: absolute;
 
-	left: -1px;
+	left: 0px;
 	right: 4px;
 	bottom: 9px;
 
 	height: 5px;
 
-	border-radius: 3px;
 	border: 1px solid;
 
 	&.green {
@@ -1932,5 +1941,50 @@ select.form-input-settings {
 		display: inline-block;
 
 		margin: 0 20px 0 0;
+	}
+}
+
+.transcription-status {
+	margin: 20px 0 35px 0;
+
+	.progress-bar {
+		position: relative;
+		
+		height: 26px;
+		
+		margin-bottom: 10px;
+		
+		border: 1px solid #898989;
+		border-radius: 3px;
+
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cccccc+0,e4e4e4+100 */
+		background: #cccccc; /* Old browsers */
+		background: -moz-linear-gradient(top,  #cccccc 0%, #e4e4e4 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top,  #cccccc 0%,#e4e4e4 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom,  #cccccc 0%,#e4e4e4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#e4e4e4',GradientType=0 ); /* IE6-9 */
+
+
+		.progress {
+			position: absolute;
+
+			top: 0;
+			left: 0;
+			bottom: 0;
+
+			width: 0;
+
+			border-right: 1px solid #898989;
+
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f1b33a+0,ea981f+100 */
+			background: #f1b33a; /* Old browsers */
+			background: -moz-linear-gradient(top,  #f1b33a 0%, #ea981f 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top,  #f1b33a 0%,#ea981f 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom,  #f1b33a 0%,#ea981f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1b33a', endColorstr='#ea981f',GradientType=0 ); /* IE6-9 */
+
+
+			.transition(all 1500ms ease-in-out);
+		}
 	}
 }
