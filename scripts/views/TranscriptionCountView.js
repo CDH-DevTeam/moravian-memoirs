@@ -16,7 +16,7 @@ module.exports = Backbone.View.extend({
 
 			this.$el.find('.page-number-label').html('<strong>'+this.model.get('data').transcribed+'</strong> of '+this.model.get('data').total+' pages transcribed')
 
-			this.$el.find('.progress').css('width', (this.model.get('data').transcribed/this.model.get('data').total)*100+'%');
+			this.$el.find('.progress').html(Math.round((this.model.get('data').transcribed/this.model.get('data').total)*100)+'%').css('width', (this.model.get('data').transcribed/this.model.get('data').total)*100+'%');
 		}, this));
 		this.model.fetch();
 	}
