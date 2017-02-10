@@ -4,7 +4,7 @@ var _ = require('underscore');
 module.exports = Backbone.Collection.extend({
 	urlBase: window.apiUrl+'/v2/persons',
 
-	getPersons: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive) {
+	getPersons: function(yearRange, rangeType, gender, place, placeRelation, name, firstname, surname, archive, documentId) {
 		this.searchQuery = {
 			yearRange: yearRange,
 			rangeType: rangeType,
@@ -14,7 +14,8 @@ module.exports = Backbone.Collection.extend({
 			name: name,
 			firstname: firstname,
 			surname: surname,
-			archive: archive
+			archive: archive,
+			documentId: documentId
 		};
 
 		this.url = this.urlBase+
@@ -26,7 +27,8 @@ module.exports = Backbone.Collection.extend({
 			(this.searchQuery.name != undefined && this.searchQuery.name != null ? '/name/'+this.searchQuery.name : '')+
 			(this.searchQuery.firstname != undefined && this.searchQuery.firstname != null ? '/firstname/'+this.searchQuery.firstname : '')+
 			(this.searchQuery.surname != undefined && this.searchQuery.surname != null ? '/surname/'+this.searchQuery.surname : '')+
-			(this.searchQuery.archive != undefined && this.searchQuery.archive != null ? '/archive/'+this.searchQuery.archive : '')
+			(this.searchQuery.archive != undefined && this.searchQuery.archive != null ? '/archive/'+this.searchQuery.archive : '')+
+			(this.searchQuery.documentId != undefined && this.searchQuery.documentId != null ? '/doc_id/'+this.searchQuery.documentId : '')
 		;
 
 		this.fetch({
@@ -47,6 +49,7 @@ module.exports = Backbone.Collection.extend({
 			(this.searchQuery.firstname != undefined && this.searchQuery.firstname != null ? '/firstname/'+this.searchQuery.firstname : '')+
 			(this.searchQuery.surname != undefined && this.searchQuery.surname != null ? '/surname/'+this.searchQuery.surname : '')+
 			(this.searchQuery.archive != undefined && this.searchQuery.archive != null ? '/archive/'+this.searchQuery.archive : '')+
+			(this.searchQuery.documentId != undefined && this.searchQuery.documentId != null ? '/doc_id/'+this.searchQuery.documentId : '')+
 			'/page/'+(this.metadata.page+40)
 		;
 

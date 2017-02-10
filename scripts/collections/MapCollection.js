@@ -9,7 +9,7 @@ module.exports = Backbone.Collection.extend({
 	},
 
 	// /v2/locations(/)(year_range/:num1/:num2/?)(/)(range_type/:rangetype/?)(/)(relation/:relation/?)(/)(gender/:gender/?)(/)(name/:name/?)
-	getPlaces: function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive) {
+	getPlaces: function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive, documentId) {
 		this.url = this.urlBase+
 			(yearRange != undefined && yearRange != null ? typeof yearRange == 'number' ? '/year_range/'+yearRange+'/'+yearRange : '/year_range/'+yearRange[0]+'/'+yearRange[1] : '')+
 			(rangeType != undefined && rangeType != null ? '/range_type/'+rangeType : '')+
@@ -20,7 +20,8 @@ module.exports = Backbone.Collection.extend({
 			(name != undefined && name != null ? '/name/'+name : '')+
 			(firstname != undefined && firstname != null ? '/firstname/'+firstname : '')+
 			(surname != undefined && surname != null ? '/surname/'+surname : '')+
-			(archive != undefined && archive != null ? '/archive/'+archive : '')
+			(archive != undefined && archive != null ? '/archive/'+archive : '')+
+			(documentId != undefined && documentId != null ? '/doc_id/'+documentId : '')
 
 		;
 

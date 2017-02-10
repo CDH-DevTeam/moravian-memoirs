@@ -18,13 +18,16 @@ module.exports = Backbone.View.extend({
 
 		this.render();
 
-		this.router.on('route:places', _.bind(function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive) {
+		this.router.on('route:places', _.bind(function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive, documentId) {
 			this.setAppMode('places');
 
 			$('html').removeClass('has-overlay');
 			$('#textViewer').removeClass('visible');
 
-			if (yearRange != null) {
+			if (documentId != null) {
+				this.getPlaces(null, null, null, null, null, null, null, null, null, null, documentId);
+			}
+			else if (yearRange != null) {
 				this.getPlaces(yearRange.split(';'), rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive);
 			}
 		}, this));
@@ -111,7 +114,7 @@ module.exports = Backbone.View.extend({
 		}, this), 2000);
 	},
 
-	getPlaces: function(yearRange, rangeType, relationType, gender, place, placeRelation, name, firstname, surname, archive) {
+	getPlaces: function(yearRange, rangeType, relationType, gender, place, placeRelation, name, firstname, surname, archive, documentId) {
 		this.searchCriterias.yearRange = yearRange;
 		this.searchCriterias.rangeType = rangeType;
 		this.searchCriterias.relationType = relationType;
@@ -122,6 +125,7 @@ module.exports = Backbone.View.extend({
 		this.searchCriterias.firstname = firstname;
 		this.searchCriterias.surname = surname;
 		this.searchCriterias.archive = archive;
+		this.searchCriterias.documentId = documentId;
 
 		this.updateMap();
 	},
@@ -214,7 +218,8 @@ module.exports = Backbone.View.extend({
 				this.searchCriterias.name == '' ? null : this.searchCriterias.name,
 				this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
 				this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
-				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+				this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive,
+				this.searchCriterias.documentId == '' ? null : this.searchCriterias.documentId
 			);
 /*
 			if (this.currentPlace != undefined) {
@@ -252,7 +257,8 @@ module.exports = Backbone.View.extend({
 			this.searchCriterias.name == '' ? null : this.searchCriterias.name,
 			this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
 			this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
-			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive,
+			this.searchCriterias.documentId == '' ? null : this.searchCriterias.documentId
 		);
 
 		this.graphView.collection.getYearData(
@@ -264,7 +270,8 @@ module.exports = Backbone.View.extend({
 			this.searchCriterias.name == '' ? null : this.searchCriterias.name,
 			this.searchCriterias.firstname == '' ? null : this.searchCriterias.firstname,
 			this.searchCriterias.surname == '' ? null : this.searchCriterias.surname,
-			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive
+			this.searchCriterias.archive == 'initial' ? null : this.searchCriterias.archive,
+			this.searchCriterias.documentId == '' ? null : this.searchCriterias.documentId
 		);
 
 		this.$el.find('.hitlist-container').css('display', 'block');
