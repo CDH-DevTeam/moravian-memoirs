@@ -84,7 +84,7 @@ module.exports = Backbone.View.extend({
 		this.$el.removeClass('loading');
 
 		if (this.collection.length == 1) {
-			this.$el.find('.list-container .item-open').addClass('item-open');
+			this.$el.find('.list-container .list-item').addClass('item-open');
 		}
 	}
 });
