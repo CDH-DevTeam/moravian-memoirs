@@ -82,5 +82,9 @@ module.exports = Backbone.View.extend({
 		)+' of '+this.collection.metadata.total);
 
 		this.$el.removeClass('loading');
+
+		if (this.collection.length == 1) {
+			this.$el.find('.list-container .item-open').addClass('item-open');
+		}
 	}
 });
