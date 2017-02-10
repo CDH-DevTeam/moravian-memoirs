@@ -57,6 +57,8 @@ module.exports = Backbone.View.extend({
 	renderList: function() {
 		this.$el.find('.list-container').html('');
 
+		var listItems = [];
+
 		if (this.collection.length == 0) {
 			this.$el.addClass('no-results');
 		}
@@ -71,7 +73,9 @@ module.exports = Backbone.View.extend({
 					el: newEl,
 					model: model,
 					router: this.options.router
-				});		
+				});
+
+				listItems.push(itemView);
 			}, this));
 		}
 
@@ -84,9 +88,8 @@ module.exports = Backbone.View.extend({
 		this.$el.removeClass('loading');
 
 		if (this.collection.length == 1) {
-			setTimeout(_.bind(function() {
-				this.$el.find('.list-container .list-item').addClass('item-open');
-			}, this), 500);
+			this.$el.find('.list-container .list-item').addClass('item-open');
+			listItems[0].initMap();
 		}
 	}
 });

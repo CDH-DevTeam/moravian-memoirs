@@ -23,6 +23,10 @@ module.exports = Backbone.View.extend({
 	itemTitleClick: function(event) {
 		this.$el.toggleClass('item-open');
 
+		this.initMap();
+	},
+
+	initMap: function() {
 		if (!this.mapInitialized) {
 			this.renderMap();
 		}
