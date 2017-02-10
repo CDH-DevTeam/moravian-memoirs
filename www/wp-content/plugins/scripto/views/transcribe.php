@@ -2,6 +2,8 @@
 
 <?php echo $this->get_navigation(); ?>
 
+<script type="text/javascript" src="/lebenslauf-portal/www/js/ckeditor/ckeditor.js"></script>
+
 <div class="transcription-wrapper">
 
 	<div class="transcription-header">
@@ -33,7 +35,7 @@
 				<form action="" method="post">
 					<textarea name="scripto_transcripton" cols="45" rows="12"><?php echo $doc->getTranscriptionPageWikitext(); ?></textarea>
 					<div class="transcription-tools">
-						<div class="chars-links-container"></div>
+						<br/>
 						<input type="submit" name="scripto_submit_transcription" value="Save transcription" class="button button-primary" />
 					</div>
 				</form>
@@ -70,6 +72,6 @@
 	<?php endif; ?>
 </div>
 
-<div class="transcription-display"><?php echo $doc->getTranscriptionPageHtml(); ?></div>
+<div class="transcription-display"><?php echo html_entity_decode($doc->getTranscriptionPageHtml()); ?></div>
 
 </div>

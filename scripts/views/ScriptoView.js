@@ -19,44 +19,7 @@ module.exports = Backbone.View.extend({
 	],
 
 	events: {
-		'click .chars-links-container a': 'charsLinkClick',
 		'click .view-buttons button': 'viewButtonClick'
-	},
-
-	charsLinkClick: function(event) {
-		event.preventDefault();
-
-		function setSelectionRange(input, selectionStart, selectionEnd) {
-		  if (input.setSelectionRange) {
-		    input.focus();
-		    input.setSelectionRange(selectionStart, selectionEnd);
-		  }
-		  else if (input.createTextRange) {
-		    var range = input.createTextRange();
-		    range.collapse(true);
-		    range.moveEnd('character', selectionEnd);
-		    range.moveStart('character', selectionStart);
-		    range.select();
-		  }
-		}
-
-		function setCaretToPos (input, pos) {
-		  setSelectionRange(input, pos, pos);
-		}
-
-		var scrollPos = this.textArea.scrollTop();
-
-		var cursorPos = this.textArea.prop('selectionStart');
-		var v = this.textArea.val();
-		var textBefore = v.substring(0,  cursorPos);
-		var textAfter  = v.substring(cursorPos, v.length);
-
-		this.textArea.val(textBefore + $(event.currentTarget).data('char') + textAfter);
-
-		setCaretToPos(this.textArea[0], cursorPos+1);
-
-		this.textArea.blur();
-		this.textArea.focus();
 	},
 
 	viewButtonClick: function(event) {
@@ -96,10 +59,52 @@ module.exports = Backbone.View.extend({
 			});
 		}, this));
 
-		var charsHtml = _.map(this.germanChars, function(char) {
-			return '<a href="#" data-char="'+char+'">'+char+'</a>';
-		});
+		CKEDITOR.config.height = 500;
+		CKEDITOR.config.autoParagraph = false;
+		CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+		CKEDITOR.config.allowedContent = true;
+		CKEDITOR.config.extraPlugins = 'codemirror,specialchar';
 
-		this.$el.find('.chars-links-container').html(charsHtml.join(' '));
+		CKEDITOR.config.codemirror = {
+			styleActiveLine: false,
+			theme: '3024-custom'
+		};
+
+		CKEDITOR.config.specialChars = this.germanChars;
+
+		CKEDITOR.stylesSet.add('my_styles', [
+			{
+				name: 'Emphasized ', 
+				element: 'emph'
+			},
+			{
+				name: 'Date', 
+				element: 'date'
+			},
+			{
+				name: 'Person', 
+				element: 'name'
+			},
+			{
+				name: 'Place', 
+				element: 'placeName'
+			},
+		]);
+
+		CKEDITOR.config.stylesSet = 'my_styles';
+
+		CKEDITOR.dtd.body.date = 1;
+		CKEDITOR.dtd.body.name = 1;
+		CKEDITOR.dtd.body.placeName = 1;
+		CKEDITOR.dtd.body.emph = 1;
+
+		CKEDITOR.replace('scripto_transcripton', {
+			toolbar: [
+				{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+				[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', '-', 'SpecialChar' ],			// Defines toolbar group without name.
+				'/',																					// Line break - next group will be placed in new line.
+				{ name: 'basicstyles', items: [/* 'Bold', 'Italic', */'Styles' ] }
+			]
+		});
 	}
 });
