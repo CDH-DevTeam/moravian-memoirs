@@ -86,7 +86,7 @@ module.exports = Backbone.View.extend({
 		if (this.collection.length == 1) {
 			setTimeout(_.bind(function() {
 				this.$el.find('.list-container .list-item').addClass('item-open');
-			}, this), 100);
+			}, this), 500);
 		}
 	}
 });
