@@ -2,7 +2,7 @@
 
 <?php echo $this->get_navigation(); ?>
 
-<script type="text/javascript" src="/lebenslauf-portal/www/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<?php echo site_url(); ?>/js/ckeditor/ckeditor.js"></script>
 
 <div class="transcription-wrapper">
 
