@@ -401,7 +401,7 @@ module.exports = Backbone.View.extend({
 				);
 			}
 
-			this.renderSearchCriteria();
+//			this.renderSearchCriteria();
 
 			this.$el.find('.update-map-button').removeAttr('disabled');
 
