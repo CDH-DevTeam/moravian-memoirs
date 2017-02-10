@@ -38,6 +38,44 @@ module.exports = Backbone.View.extend({
 		}
 	},
 
+	editorKeyDown: function(event) {
+
+		if (event.data.$.altKey) {
+			event.data.$.preventDefault();
+			
+			if (event.data.$.code == 'ArrowUp') {
+				this.zoomImage.pan(0, 50, {
+					relative: true,
+					animate: true
+				});
+			}
+			if (event.data.$.code == 'ArrowDown') {
+				this.zoomImage.pan(0, -50, {
+					relative: true,
+					animate: true
+				});
+			}
+			if (event.data.$.code == 'ArrowLeft') {
+				this.zoomImage.pan(50, 0, {
+					relative: true,
+					animate: true
+				});
+			}
+			if (event.data.$.code == 'ArrowRight') {
+				this.zoomImage.pan(-50, 0, {
+					relative: true,
+					animate: true
+				});
+			}
+			if (event.data.$.code == 'KeyN') { // zoom in
+				this.zoomImage.zoom()
+			}
+			if (event.data.$.code == 'KeyM') { // zoom out
+				this.zoomImage.zoom(true)
+			}
+		}
+	},
+
 	initialize: function() {
 		this.textArea = this.$el.find('textarea[name="scripto_transcripton"]');
 
@@ -47,6 +85,8 @@ module.exports = Backbone.View.extend({
 			$zoomIn: this.$el.find('.zoom-in-button'),
 			$zoomOut: this.$el.find('.zoom-out-button')
 		});
+
+		this.zoomImage = this.$el.find('.image-viewer .image-container').panzoom("instance");
 
 		this.$el.find('.image-viewer').on('mousewheel.focal', _.bind(function(e) {
 			e.preventDefault();
@@ -106,5 +146,9 @@ module.exports = Backbone.View.extend({
 				{ name: 'basicstyles', items: [/* 'Bold', 'Italic', */'Styles' ] }
 			]
 		});
+
+		CKEDITOR.instances.scripto_transcripton.on('contentDom', _.bind(function() {
+			CKEDITOR.instances.scripto_transcripton.document.on('keydown', _.bind(this.editorKeyDown, this));
+		}, this));
 	}
 });
