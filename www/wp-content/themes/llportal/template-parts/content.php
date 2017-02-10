@@ -10,9 +10,7 @@
 ?>
 
 <?php
-	$category = get_the_category();
-
-	if (is_archive() && get_object_vars($category[0])['slug'] == 'transcriptions') {
+	if (is_archive() && get_post_type() == 'memoirs') {
 		?>
 		<a href="<?php echo esc_url( get_permalink() ); ?>" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<?php
