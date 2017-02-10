@@ -48,7 +48,7 @@
 
 	</div>
 
-	<div class="hitlist-container wrapper bg-gray" style="display:none">
+	<div class="hitlist-container wrapper bg-gray">
 
 		<div class="container">
 

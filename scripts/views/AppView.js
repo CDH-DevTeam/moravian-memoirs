@@ -26,6 +26,10 @@ module.exports = Backbone.View.extend({
 
 			if (documentId != null) {
 				this.getPlaces(null, null, null, null, null, null, null, null, null, null, documentId);
+
+				$('html, body').animate({
+					scrollTop: $('.hitlist-container').offset().top
+				}, 1000);
 			}
 			else if (yearRange != null) {
 				this.getPlaces(yearRange.split(';'), rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive);
