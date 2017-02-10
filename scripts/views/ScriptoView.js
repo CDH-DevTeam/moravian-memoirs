@@ -40,7 +40,7 @@ module.exports = Backbone.View.extend({
 
 	editorKeyDown: function(event) {
 
-		if (event.data.$.altKey) {
+		if (event.data.$.altKey && event.data.$.shiftKey) {
 			event.data.$.preventDefault();
 			
 			if (event.data.$.code == 'ArrowUp') {
