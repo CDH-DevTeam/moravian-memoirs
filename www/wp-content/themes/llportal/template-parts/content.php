@@ -23,11 +23,23 @@
 		$postMedia = get_attached_media('image');
 
 		echo '<div class="transcription-archive-thumbs" data-id="'.get_the_ID().'">';
+
+		$c = 1;
 		foreach ($postMedia as $image) {
 			$imageId = get_object_vars($image)['ID'];
 			echo '<span class="thumb" data-id="'.$imageId.'">';
 			echo wp_get_attachment_image($imageId);
 			echo '</span>';
+
+			$c++;
+
+			if ($c > 7) {
+				break;
+			}
+		}
+
+		if (count($postMedia) > 7) {
+			echo '<span class="thumb label">+'.(count($postMedia)-7).'</span>';
 		}
 		echo '</div>';
 		echo '</a>';
