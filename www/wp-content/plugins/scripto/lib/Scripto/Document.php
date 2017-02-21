@@ -133,7 +133,7 @@ class Scripto_Document
         if (!$this->_adapter->documentPageExists($this->_id, $pageId)) {
             throw new Scripto_Exception("The specified page does not exist: $pageId");
         }
-        
+
         // Mint the page title used by MediaWiki.
         $baseTitle = self::encodeBaseTitle($this->_id, $pageId);
         
@@ -543,7 +543,7 @@ class Scripto_Document
         if (is_null($this->_pageId)) {
             throw new Scripto_Exception('The document page must be set before unwatching the page.');
         }
-        $this->_mediawiki->watch($this->_baseTitle, null, array('unwatch' => true));
+        $this->_mediawiki->watch($this->_baseTitle, array('unwatch' => true));
     }
     
     /**
@@ -921,10 +921,10 @@ class Scripto_Document
      * @param string|int $baseTitle
      * @return array An array containing the document ID and page ID
      */
-    static public function decodeBaseTitle($_id, $_title, $baseTitle)
+    static public function decodeBaseTitle($baseTitle)
     {
         // First remove the title prefix.
-     //   $baseTitle = ltrim($baseTitle, self::BASE_TITLE_PREFIX);
+        $baseTitle = ltrim($baseTitle, self::BASE_TITLE_PREFIX);
         // Create an array containing the document ID and page ID.
         $baseTitle = explode(self::BASE_TITLE_DELIMITER, $baseTitle);
         // URL-safe Base64 decode the array and return it.
@@ -940,7 +940,7 @@ class Scripto_Document
      */
     static public function base64UrlEncode($str)
     {
-        return strtr(rtrim(utf8_encode($str), '='), ($str), ($str));
+        return strtr(rtrim(base64_encode($str), '='), '+/', '-_');
     }
     
     /**
@@ -951,6 +951,6 @@ class Scripto_Document
      */
     static public function base64UrlDecode($str)
     {
-        return utf8_decode(strtr($str, ($str), ($str)));
+        return base64_decode(strtr($str, '-_', '+/'));
     }
 }
