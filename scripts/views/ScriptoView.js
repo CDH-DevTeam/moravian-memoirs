@@ -103,7 +103,8 @@ module.exports = Backbone.View.extend({
 		CKEDITOR.config.autoParagraph = false;
 		CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
 		CKEDITOR.config.allowedContent = true;
-		CKEDITOR.config.extraPlugins = 'codemirror,specialchar';
+		CKEDITOR.config.extraAllowedContent  = 'emph hi del unclear date persName placeName gap note';
+		CKEDITOR.config.extraPlugins = 'codemirror,specialchar,htmlbuttons';
 
 		CKEDITOR.config.codemirror = {
 			styleActiveLine: false,
@@ -112,22 +113,59 @@ module.exports = Backbone.View.extend({
 
 		CKEDITOR.config.specialChars = this.germanChars;
 
-		CKEDITOR.stylesSet.add('my_styles', [
+		CKEDITOR.config.htmlbuttons =  [
 			{
-				name: 'Emphasized ', 
-				element: 'emph'
+				name: 'tei-emph',
+				icon: 'italics-font-style-variant.png',
+				html: '<emph> </emph>',
+				title: 'Emphasized'
 			},
+			{
+				name:'tei-superscript', 
+				icon:'font-style-superscript.png',
+				html:'<hi rend="superscript"> </hi>',
+				title:'SuperScript'
+			},
+			{
+				name:'tei-underline', 
+				icon:'font-style-underline.png',
+				html:'<hi rend="underline"> </hi>',
+				title:'Underline'
+			},
+			{
+				name:'tei-deletion', 
+				icon:'strikethrough-font-variant.png',
+				html:'<del> </del>',
+				title:'Deletion'
+			},
+			{
+				name:'tei-unclear', 
+				icon:'question.png',
+				html:'<unclear> </unclear>',
+				title:'Unclear'
+			},
+		];
+
+		CKEDITOR.stylesSet.add('my_styles', [
 			{
 				name: 'Date', 
 				element: 'date'
 			},
 			{
 				name: 'Person', 
-				element: 'name'
+				element: 'persName'
 			},
 			{
 				name: 'Place', 
 				element: 'placeName'
+			},
+			{
+				name: 'Illegible/gap', 
+				element: 'gap'
+			},
+			{
+				name: 'Note', 
+				element: 'note'
 			},
 		]);
 
@@ -143,7 +181,7 @@ module.exports = Backbone.View.extend({
 				{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
 				[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', '-', 'SpecialChar' ],			// Defines toolbar group without name.
 				'/',																					// Line break - next group will be placed in new line.
-				{ name: 'basicstyles', items: [/* 'Bold', 'Italic', */'Styles' ] }
+				{ name: 'basicstyles', items: [ 'tei-emph', 'tei-superscript', 'tei-underline', 'tei-deletion', 'tei-unclear', 'Styles' ] }
 			]
 		});
 

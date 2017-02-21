@@ -35,7 +35,7 @@
 .cm-s-3024-custom span.cm-bracket { color: #3a3432; }
 .cm-s-3024-custom span.cm-tag { color: #db2d20; font-weight: bold; }
 .cm-s-3024-custom span.cm-link { color: #a16a94; }
-.cm-s-3024-custom span.cm-error { background: #db2d20; color: #5c5855; }
+.cm-s-3024-custom span.cm-error { background: #db2d20; color: #fff; }
 
 .cm-s-3024-custom .CodeMirror-activeline-background { background: #e8f2ff; }
 .cm-s-3024-custom .CodeMirror-matchingbracket { text-decoration: underline; color: #a16a94 !important; }

@@ -2075,7 +2075,7 @@ select.form-input-settings {
 		color: #008000;
 	}
 
-	name {
+	persName {
 		color: #c86309;
 	}
 
@@ -2085,5 +2085,50 @@ select.form-input-settings {
 
 	emph {
 		font-style: italic;
+	}
+
+	unclear {
+		color: #ae913e;
+	}
+
+	unclear:before, unclear:after {
+		content: "?";
+
+		padding: 0 2px;
+
+		color: #999;
+	}
+
+	gap {
+		&:before {
+			display: inline-block;
+			
+			content: "...";
+			
+			width: 20px;
+
+			padding: 0 0 0 6px;
+			
+			background: #e4e4e4;
+			
+			border-radius: 3px;
+		}
+	}
+
+	hi[rend=underline] {
+		text-decoration: underline;
+	}
+
+	hi[rend=superscript] {
+		font-size: 0.8rem;
+		vertical-align: super;
+	}
+
+	note {
+		background: #ffff51;
+		
+		border: 1px solid #ffa500;
+		border-radius: 3px;
+		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 	}
 }
