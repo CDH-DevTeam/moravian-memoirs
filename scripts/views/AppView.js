@@ -14,10 +14,12 @@ module.exports = Backbone.View.extend({
 
 		this.searchCriterias = {};
 
+		// Initialize router
 		this.router = new AppRouter();
 
 		this.render();
 
+		// Listen to route events and initialize relevant View based on the new route
 		this.router.on('route:places', _.bind(function(yearRange, rangeType, relation, gender, place, placeRelation, name, firstname, surname, archive, documentId) {
 			this.setAppMode('places');
 
