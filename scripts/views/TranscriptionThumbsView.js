@@ -39,6 +39,6 @@ module.exports = Backbone.View.extend({
 			return btoa(str).replace(/=/g, '');
 		}
 
-		return '.'+base64UrlEncode(pageId)+'.'+base64UrlEncode(documentId);
+		return '.'+pageId+'.'+documentId;
 	}
 });
