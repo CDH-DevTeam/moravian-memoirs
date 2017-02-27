@@ -37,6 +37,15 @@
 					<div class="transcription-tools">
 						<br/>
 						<input type="submit" name="scripto_submit_transcription" value="Save transcription" class="button button-primary" />
+						<a class="transcription-help">
+							<div class="help-icon">Transcription help</div>
+							<div class="help-content">
+								<h4>Image shortcuts</h4>
+								<p>The following keyboard shortcuts can be used from within the transcription text editor to zoom/pan the document image:<br/><br/>
+								<img src="<?php echo get_site_url(); ?>/img/scripto-help-image-zoom.png"/><br/><br/>
+								<img src="<?php echo get_site_url(); ?>/img/scripto-help-image-pan.png"/></p>
+							</div>
+						</a>
 					</div>
 				</form>
 			<?php else: ?>

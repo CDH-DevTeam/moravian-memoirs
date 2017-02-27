@@ -106,6 +106,9 @@ module.exports = Backbone.View.extend({
 		CKEDITOR.config.extraAllowedContent  = 'emph hi del unclear date persName placeName gap note';
 		CKEDITOR.config.extraPlugins = 'codemirror,specialchar,htmlbuttons';
 
+		CKEDITOR.config.protectedSource.push(/<\persName[\s\S]*?\>[\s\S]*?<\/persName\>/g);
+		CKEDITOR.config.protectedSource.push(/<\placeName[\s\S]*?\>[\s\S]*?<\/placeName\>/g);
+
 		CKEDITOR.config.codemirror = {
 			styleActiveLine: false,
 			theme: '3024-custom'

@@ -1777,6 +1777,76 @@ select.form-input-settings {
 		}
 	}
 
+	.transcription-help {
+		display: inline-block;
+
+		position: relative;
+
+		float: right;
+
+    	.help-icon {
+    		&:before {
+				display: inline-block;
+
+				content: "?";
+
+				width: 25px;
+				height: 25px;
+
+				background: #1EAEDB;
+
+				border-radius: 100%;
+
+				color: #fff;
+				text-align: center;
+				font-weight: bold;
+				margin-right: 5px;
+    		}
+    	}
+
+    	.help-content {
+			position: absolute;
+
+			right: 0;
+			bottom: 0;
+
+			min-width: 600px;
+
+			padding: 15px;
+
+			background: #fff;
+
+			color: #333;
+
+			border-radius: 3px;
+			box-shadow: 0 0 0 1px #969696, 0 3px 2px 0 rgba(0,0,0,.3);
+
+			opacity: 0;
+
+			pointer-events: none;
+
+			.transform(translateY(15px));
+
+			.transition(all 300ms ease-in-out);
+
+			img {
+				border: none;
+				border-radius: 0;
+				box-shadow: none;
+			}
+    	}
+
+    	&:hover {
+    		.help-content {
+    			opacity: 1;
+
+    			pointer-events: all;
+
+				.transform(translateY(0));
+    		}
+    	}
+	}
+
 	.transcription-display {
 		padding: 15px;
 
