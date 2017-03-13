@@ -83,6 +83,8 @@
 							$count++;
 						}
 						echo implode(', ', $docLinks);
+						echo '<br/>';
+						echo '<a href="http://moravianlives.org:8001/tei/document/'.$tags[0].'" target="_blank">Export as XML</a>'
 						echo '</p>';
 					}
 				}
